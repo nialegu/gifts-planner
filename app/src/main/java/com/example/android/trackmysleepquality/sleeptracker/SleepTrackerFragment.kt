@@ -39,11 +39,6 @@ class SleepTrackerFragment : Fragment() {
 
     private lateinit var viewModel: SleepTrackerViewModel
 
-    /**
-     * Called when the Fragment is ready to display content to the screen.
-     *
-     * This function uses DataBindingUtil to inflate R.layout.fragment_sleep_quality.
-     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -65,6 +60,9 @@ class SleepTrackerFragment : Fragment() {
         }
         binding.clearButton.setOnClickListener {
             viewModel.onClear()
+        }
+        binding.createButton.setOnClickListener {
+
         }
 
         viewModel.nightsString.observe(viewLifecycleOwner, Observer { nightsString ->

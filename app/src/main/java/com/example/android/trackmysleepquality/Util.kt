@@ -117,13 +117,16 @@ fun formatClothes(nights: List<Clothes>, resources: Resources): Spanned {
             append("\t${it.description}<br>")
             append(resources.getString(R.string.season))
             append("\t${it.season.toString()}<br>")
-            /*append(resources.getString(R.string.hours_slept))
-            append("\t ${it.endTimeMillis.minus(it.startTimeMillis) / 1000 / 60 / 60}:")
-            // Minutes
-            append("${it.endTimeMillis.minus(it.startTimeMillis) / 1000 / 60}:")
-            // Seconds
-            append("${it.endTimeMillis.minus(it.startTimeMillis) / 1000}<br><br>")*/
-
+            append(resources.getString(R.string.type))
+            append("\t${it.type}<br>")
+            if (it.clothesSize != null) {
+                append(resources.getString(R.string.size))
+                append("\t${it.clothesSize}<br><br>")
+            }
+            if (it.shoesSize != null) {
+                append(resources.getString(R.string.size))
+                append("\t${it.shoesSize}<br><br>")
+            }
         }
     }
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
