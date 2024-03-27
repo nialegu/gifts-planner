@@ -22,6 +22,7 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import androidx.core.text.HtmlCompat
+import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepNight
 import java.text.SimpleDateFormat
 
@@ -95,6 +96,34 @@ fun formatNights(nights: List<SleepNight>, resources: Resources): Spanned {
                 // Seconds
                 append("${it.endTimeMillis.minus(it.startTimeMillis) / 1000}<br><br>")
             }
+        }
+    }
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
+    }
+}
+
+fun formatClothes(nights: List<Clothes>, resources: Resources): Spanned {
+    val sb = StringBuilder()
+    sb.apply {
+        append(resources.getString(R.string.titleClothes))
+        nights.forEach {
+            append("<br>")
+            append(resources.getString(R.string.name))
+            append("\t${it.name}<br>")
+            append(resources.getString(R.string.description))
+            append("\t${it.description}<br>")
+            append(resources.getString(R.string.season))
+            append("\t${it.season.toString()}<br>")
+            /*append(resources.getString(R.string.hours_slept))
+            append("\t ${it.endTimeMillis.minus(it.startTimeMillis) / 1000 / 60 / 60}:")
+            // Minutes
+            append("${it.endTimeMillis.minus(it.startTimeMillis) / 1000 / 60}:")
+            // Seconds
+            append("${it.endTimeMillis.minus(it.startTimeMillis) / 1000}<br><br>")*/
+
         }
     }
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

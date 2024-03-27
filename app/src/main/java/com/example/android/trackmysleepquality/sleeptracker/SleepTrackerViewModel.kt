@@ -28,6 +28,7 @@ import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.enums.ClothesSize
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
+import com.example.android.trackmysleepquality.formatClothes
 import com.example.android.trackmysleepquality.formatNights
 import kotlinx.coroutines.*
 
@@ -43,7 +44,9 @@ class SleepTrackerViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
     private var tonight = MutableLiveData<SleepNight?>()
+
     private val nights = dao.getAllNights()
+    private val clothes = dao.getAllClothes()
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
     val navigateToSleepQuality: LiveData<SleepNight?>
@@ -52,6 +55,9 @@ class SleepTrackerViewModel(
     val nightsString = nights.map { nights ->
         formatNights(nights, application.resources)
     }
+    val clothesString = clothes.map { clothes ->
+        formatClothes(clothes, application.resources)
+    }
 
     val startButtonVisible = tonight.map { tonight ->
         tonight == null
@@ -59,9 +65,14 @@ class SleepTrackerViewModel(
     val stopButtonVisible = tonight.map { tonight ->
         tonight != null
     }
+
     val clearButtonVisible = nights.map { nights ->
         nights.isNotEmpty()
     }
+    /*val clearButtonVisible = clothes.map { clothes ->
+        clothes.isEmpty()
+    }*/
+
 
     init {
         initializeTonight()
