@@ -29,5 +29,5 @@ data class Clothes (
     var clothesSize: ClothesSize?,
 
     @ColumnInfo(name = "shoesSize")
-    var shoesSize: Int
+    var shoesSize: Int?
 )
