@@ -17,12 +17,17 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
+import com.example.android.trackmysleepquality.enums.ClothesSize
+import com.example.android.trackmysleepquality.enums.Season
+import com.example.android.trackmysleepquality.enums.Type
 import com.example.android.trackmysleepquality.formatNights
 import kotlinx.coroutines.*
 
@@ -121,6 +126,7 @@ class SleepTrackerViewModel(
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
             dao.clear()
+            dao.clearClothes()
         }
     }
 
