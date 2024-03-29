@@ -82,7 +82,7 @@ class ClothesFormFragment : Fragment() {
         binding.addButton.setOnClickListener {
             name = binding.nameField.editText?.text.toString()
             description = binding.descriptionField.editText?.text.toString()
-            shoesSize = Integer.parseInt(binding.shoesSizeField.editText?.text.toString())
+            if (binding.shoesSizeField.editText?.text.toString() != "") shoesSize = Integer.parseInt(binding.shoesSizeField.editText?.text.toString())
             val newClothes: Clothes = Clothes(
                 name = name,
                 season = season,

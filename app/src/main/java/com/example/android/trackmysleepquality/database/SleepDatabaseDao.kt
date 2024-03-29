@@ -61,9 +61,9 @@ interface SleepDatabaseDao {
     @Query("SELECT * FROM clothes ORDER BY id DESC")
     fun getAllClothesFuture(): List<Clothes>
 
-            @Query("SELECT * FROM clothes c " +
+    @Query("SELECT * FROM clothes c " +
             "WHERE c.name LIKE :pattern " +
             "OR c.description LIKE :pattern " +
-            "ORDER BY id DESC LIMIT 1")
-    fun getTonight(pattern: String): Clothes?
+            "ORDER BY id DESC LIMIT 10")
+    fun getClothesByName(pattern: String): LiveData<List<Clothes>>
 }

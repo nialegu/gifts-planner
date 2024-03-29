@@ -105,11 +105,11 @@ fun formatNights(nights: List<SleepNight>, resources: Resources): Spanned {
     }
 }
 
-fun formatClothes(nights: List<Clothes>, resources: Resources): Spanned {
+fun formatClothes(clothesList: List<Clothes>, resources: Resources): Spanned {
     val sb = StringBuilder()
     sb.apply {
         append(resources.getString(R.string.titleClothes))
-        nights.forEach {
+        clothesList.forEach {
             append("<br>")
             append(resources.getString(R.string.name))
             append("\t${it.name}<br>")

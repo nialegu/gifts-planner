@@ -17,6 +17,7 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
+import android.text.Spanned
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -46,7 +47,8 @@ class SleepTrackerViewModel(
     private var tonight = MutableLiveData<SleepNight?>()
 
     private val nights = dao.getAllNights()
-    private val clothes = dao.getAllClothes()
+    var clothes = dao.getAllClothes()
+
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
     val navigateToSleepQuality: LiveData<SleepNight?>
@@ -55,8 +57,20 @@ class SleepTrackerViewModel(
     val nightsString = nights.map { nights ->
         formatNights(nights, application.resources)
     }
-    val clothesString = clothes.map { clothes ->
+    var clothesString = clothes.map { clothes ->
         formatClothes(clothes, application.resources)
+    }
+
+    var test  = application.resources
+    fun searchClothes(text: String){
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                val foundedClothes = dao.getClothesByName(text)
+                clothesString = foundedClothes.map { clothes->
+                    formatClothes(clothes, test)
+                }
+            }
+        }
     }
 
     val startButtonVisible = tonight.map { tonight ->

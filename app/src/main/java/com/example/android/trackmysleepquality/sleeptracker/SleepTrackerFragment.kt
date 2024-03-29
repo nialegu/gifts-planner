@@ -29,6 +29,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
+import java.util.logging.Logger
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -65,6 +66,11 @@ class SleepTrackerFragment : Fragment() {
             this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
         }
 
+        binding.searchButton.setOnClickListener {
+            val searchText = binding.searchField.text.toString()
+            viewModel.searchClothes(searchText)
+        }
+
         /*viewModel.nightsString.observe(viewLifecycleOwner, Observer { nightsString ->
             binding.textview.text = nightsString
         })*/
@@ -72,20 +78,34 @@ class SleepTrackerFragment : Fragment() {
             binding.textview.text = clothesString
         })
 
-       /* viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
-            if (night != null) {
-                this.findNavController().navigate(
-                        SleepTrackerFragmentDirections
-                                .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
-                viewModel.doneNavigating()
+        // !!!!!!!!!!!!!!!!!!!
+        /*viewModel.clothes.observe(viewLifecycleOwner, Observer { clothes ->
+            val resultList: MutableList<TextView> = mutableListOf()
+            clothes.map {
+                val textView = TextView(context)
+                textView.text = it.description
+                textView.setTextColor(Color.RED)
+                resultList.plusAssign(textView)
             }
-        })
-        viewModel.startButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
-            binding.startButton.isEnabled = visible
-        })
-        viewModel.stopButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
-            binding.stopButton.isEnabled = visible
+            resultList.map {
+                binding.clothesList.addView(it)
+            }
         })*/
+
+        /* viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
+             if (night != null) {
+                 this.findNavController().navigate(
+                         SleepTrackerFragmentDirections
+                                 .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
+                 viewModel.doneNavigating()
+             }
+         })
+         viewModel.startButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
+             binding.startButton.isEnabled = visible
+         })
+         viewModel.stopButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
+             binding.stopButton.isEnabled = visible
+         })*/
         viewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
             binding.clearButton.isEnabled = visible
         })

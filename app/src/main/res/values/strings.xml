@@ -78,5 +78,7 @@
     <string name="shoesSize">Shoes size</string>
     <string name="enter_shoes_size">Enter size</string>
     <string name="chooseTheSize">Choose size</string>
+    <string name="searchByName">Search clothes by name</string>
+    <string name="search">Search</string>
 
 </resources>
