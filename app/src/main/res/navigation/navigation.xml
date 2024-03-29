@@ -33,6 +33,11 @@
             app:destination="@id/sleep_quality_fragment"
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_sleep_tracker_fragment_to_clothes_form_fragment"
+            app:destination="@id/clothes_form_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_right"/>
     </fragment>
 
     <fragment
@@ -45,6 +50,19 @@
             app:argType="long" />
         <action
             android:id="@+id/action_sleepQualityFragment_to_sleepTrackerFragment"
+            app:destination="@id/sleep_tracker_fragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/sleep_tracker_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clothes_form_fragment"
+        android:name="com.example.android.trackmysleepquality.clothesform.ClothesFormFragment"
+        android:label="@string/clothes_form_fragment"
+        tools:layout="@layout/fragment_clothes_form">
+        <action
+            android:id="@+id/action_clothesFormFragment_to_sleepTrackerFragment"
             app:destination="@id/sleep_tracker_fragment"
             app:launchSingleTop="false"
             app:popUpTo="@+id/sleep_tracker_fragment"

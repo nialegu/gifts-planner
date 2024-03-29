@@ -61,5 +61,9 @@
     <string name="type">"Type: "</string>
     <string name="size">"Size: "</string>
     <string name="create">Create</string>
+    <string name="add">Add</string>
+    <string name="enter_a_description">Enter a description</string>
+    <string name="enter_a_name">Enter a name</string>
+    <string name="clothes_form_fragment">ClothesFormFragment</string>
 
 </resources>

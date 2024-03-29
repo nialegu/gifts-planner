@@ -62,7 +62,7 @@ class SleepTrackerFragment : Fragment() {
             viewModel.onClear()
         }
         binding.createButton.setOnClickListener {
-
+            this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
         }
 
         viewModel.nightsString.observe(viewLifecycleOwner, Observer { nightsString ->
