@@ -1,6 +1,7 @@
 package com.example.android.trackmysleepquality.clothesform
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.trackmysleepquality.R
+import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentClothesFormBinding
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
@@ -32,6 +34,12 @@ class ClothesFormFragment : Fragment() {
         val viewModelFactory = ClothesFormViewModelFactory(dao, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ClothesFormViewModel::class.java)
+
+        binding.addButton.setOnClickListener {
+            val name = binding.nameField.editText?.text.toString()
+            val description = binding.descriptionField.editText?.text.toString()
+
+        }
 
         return binding.root
     }
