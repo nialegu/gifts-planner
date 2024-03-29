@@ -17,10 +17,11 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -29,6 +30,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
+import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
 
@@ -64,27 +66,36 @@ class SleepTrackerFragment : Fragment() {
             viewModel.onClear()
         }
         binding.createButton.setOnClickListener {
+            binding.searchField.text?.clear()
             this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
         }
 
         binding.searchButton.setOnClickListener {
             val searchText = binding.searchField.text.toString()
+
             if (searchText == "") binding.textview.text = viewModel.clothesString.value
             else viewModel.onSearch(searchText)
         }
 
         viewModel.foundedAfterSearchClothes.observe(viewLifecycleOwner, Observer { clothes ->
+            binding.clothesList.isVisible = false
             if (clothes.isEmpty()){
                 binding.textview.text = resources.getString(R.string.nothingWasFound)
             }
-            else binding.textview.text = viewModel.test(clothes)
+            else {
+                getViews(clothes, binding.searchFieldLayout)
+            }
         })
 
         /*viewModel.nightsString.observe(viewLifecycleOwner, Observer { nightsString ->
             binding.textview.text = nightsString
-        })*/
+        })*//*
         viewModel.clothesString.observe(viewLifecycleOwner, Observer { clothesString ->
             binding.textview.text = clothesString
+        })*/
+
+        viewModel.clothes.observe(viewLifecycleOwner, Observer { clothes ->
+            getViews(clothes, binding.clothesList)
         })
 
         // !!!!!!!!!!!!!!!!!!!
@@ -120,5 +131,30 @@ class SleepTrackerFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun getViews(clothes: List<Clothes>, layout: LinearLayout){
+        val resultList: MutableList<View> = mutableListOf()
+        clothes.map {cl ->
+            val linearLayout = LinearLayout(context)
+            linearLayout.orientation = LinearLayout.HORIZONTAL
+
+            val item = TextView(context)
+            item.text = viewModel.getStringsForOneItem(cl)
+            linearLayout.addView(item)
+
+            val button = Button(context)
+            button.text = resources.getString(R.string.delete)
+            button.setOnClickListener {
+                viewModel.onDelete(cl.id)
+            }
+            linearLayout.addView(button)
+
+            resultList.plusAssign(linearLayout)
+        }
+        layout.removeAllViews()
+        resultList.map {
+            layout.addView(it)
+        }
     }
 }

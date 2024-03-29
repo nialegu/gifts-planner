@@ -26,6 +26,7 @@ import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.formatClothes
+import com.example.android.trackmysleepquality.formatClothesForOneItem
 import com.example.android.trackmysleepquality.formatNights
 import kotlinx.coroutines.*
 
@@ -71,8 +72,11 @@ class SleepTrackerViewModel(
     }
 
     val resources = application.resources
-    fun test(list: List<Clothes>): Spanned{
+    fun getStringsForListClothes(list: List<Clothes>): Spanned{
         return formatClothes(list, resources)
+    }
+    fun getStringsForOneItem(cl: Clothes): Spanned{
+        return formatClothesForOneItem(cl, resources)
     }
 
     /*val startButtonVisible = tonight.map { tonight ->
@@ -143,13 +147,23 @@ class SleepTrackerViewModel(
         }
     }
 
+    fun onDelete(id: Long){
+        uiScope.launch {
+            deleteById(id)
+        }
+    }
+    private suspend fun deleteById(id: Long){
+        withContext(Dispatchers.IO){
+            dao.deleteClothesById(id)
+        }
+    }
+
     fun onClear() {
         uiScope.launch {
             clear()
             tonight.value = null
         }
     }
-
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
             //dao.clear()

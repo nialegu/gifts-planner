@@ -81,5 +81,6 @@
     <string name="chooseTheSize">Choose size</string>
     <string name="searchByName">Search clothes by name</string>
     <string name="search">Search</string>
+    <string name="delete">Delete</string>
 
 </resources>

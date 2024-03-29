@@ -135,3 +135,31 @@ fun formatClothes(clothesList: List<Clothes>, resources: Resources): Spanned {
         HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }
+
+fun formatClothesForOneItem(cl: Clothes, resources: Resources): Spanned {
+    val sb = StringBuilder()
+    sb.apply {
+        append("<br>")
+        append(resources.getString(R.string.name))
+        append("\t${cl.name}<br>")
+        append(resources.getString(R.string.description))
+        append("\t${cl.description}<br>")
+        append(resources.getString(R.string.season))
+        append("\t${cl.season.toString()}<br>")
+        append(resources.getString(R.string.type))
+        append("\t${cl.type}<br>")
+        if (cl.clothesSize != null) {
+            append(resources.getString(R.string.size))
+            append("\t${cl.clothesSize}<br><br>")
+        }
+        else if (cl.shoesSize != null) {
+            append(resources.getString(R.string.size))
+            append("\t${cl.shoesSize}<br><br>")
+        }
+    }
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
+    }
+}

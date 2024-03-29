@@ -55,6 +55,9 @@ interface SleepDatabaseDao {
     @Query("DELETE FROM clothes")
     fun clearClothes()
 
+    @Query("DELETE FROM clothes WHERE id = :id")
+    fun deleteClothesById(id: Long)
+
     @Query("SELECT * FROM clothes ORDER BY id DESC")
     fun getAllClothes(): LiveData<List<Clothes>>
 
@@ -64,6 +67,6 @@ interface SleepDatabaseDao {
     @Query("SELECT * FROM clothes c " +
             "WHERE c.name LIKE :pattern " +
             "OR c.description LIKE :pattern " +
-            "ORDER BY id DESC LIMIT 10")
+            "ORDER BY id DESC")
     fun getClothesByName(pattern: String): List<Clothes>
 }
