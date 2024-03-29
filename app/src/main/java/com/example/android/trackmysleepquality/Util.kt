@@ -123,7 +123,7 @@ fun formatClothes(nights: List<Clothes>, resources: Resources): Spanned {
                 append(resources.getString(R.string.size))
                 append("\t${it.clothesSize}<br><br>")
             }
-            if (it.shoesSize != null) {
+            else if (it.shoesSize != null) {
                 append(resources.getString(R.string.size))
                 append("\t${it.shoesSize}<br><br>")
             }

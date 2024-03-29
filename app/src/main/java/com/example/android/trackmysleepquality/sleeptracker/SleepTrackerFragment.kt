@@ -65,12 +65,12 @@ class SleepTrackerFragment : Fragment() {
             this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
         }
 
-        viewModel.nightsString.observe(viewLifecycleOwner, Observer { nightsString ->
+        /*viewModel.nightsString.observe(viewLifecycleOwner, Observer { nightsString ->
             binding.textview.text = nightsString
-        })
-        /*viewModel.clothesString.observe(viewLifecycleOwner, Observer { clothesString ->
-            binding.textview.text = clothesString
         })*/
+        viewModel.clothesString.observe(viewLifecycleOwner, Observer { clothesString ->
+            binding.textview.text = clothesString
+        })
 
         viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
             if (night != null) {
