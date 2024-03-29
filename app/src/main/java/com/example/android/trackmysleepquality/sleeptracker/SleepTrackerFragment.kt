@@ -21,6 +21,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,7 +31,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
-import java.util.logging.Logger
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -68,8 +69,16 @@ class SleepTrackerFragment : Fragment() {
 
         binding.searchButton.setOnClickListener {
             val searchText = binding.searchField.text.toString()
-            viewModel.searchClothes(searchText)
+            if (searchText == "") binding.textview.text = viewModel.clothesString.value
+            else viewModel.onSearch(searchText)
         }
+
+        viewModel.foundedAfterSearchClothes.observe(viewLifecycleOwner, Observer { clothes ->
+            if (clothes.isEmpty()){
+                binding.textview.text = resources.getString(R.string.nothingWasFound)
+            }
+            else binding.textview.text = viewModel.test(clothes)
+        })
 
         /*viewModel.nightsString.observe(viewLifecycleOwner, Observer { nightsString ->
             binding.textview.text = nightsString

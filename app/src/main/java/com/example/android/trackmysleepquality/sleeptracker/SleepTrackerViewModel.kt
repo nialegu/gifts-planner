@@ -18,7 +18,6 @@ package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
 import android.text.Spanned
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,9 +25,6 @@ import androidx.lifecycle.map
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
-import com.example.android.trackmysleepquality.enums.ClothesSize
-import com.example.android.trackmysleepquality.enums.Season
-import com.example.android.trackmysleepquality.enums.Type
 import com.example.android.trackmysleepquality.formatClothes
 import com.example.android.trackmysleepquality.formatNights
 import kotlinx.coroutines.*
@@ -47,38 +43,44 @@ class SleepTrackerViewModel(
     private var tonight = MutableLiveData<SleepNight?>()
 
     private val nights = dao.getAllNights()
-    var clothes = dao.getAllClothes()
-
+    val clothes = dao.getAllClothes()
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
+
     val navigateToSleepQuality: LiveData<SleepNight?>
         get() = _navigateToSleepQuality
-
     val nightsString = nights.map { nights ->
         formatNights(nights, application.resources)
     }
-    var clothesString = clothes.map { clothes ->
+
+    val clothesString = clothes.map { clothes ->
         formatClothes(clothes, application.resources)
     }
 
-    var test  = application.resources
-    fun searchClothes(text: String){
+    val foundedAfterSearchClothes = MutableLiveData<List<Clothes>>()
+    fun onSearch(text: String){
         uiScope.launch {
-            withContext(Dispatchers.IO) {
-                val foundedClothes = dao.getClothesByName(text)
-                clothesString = foundedClothes.map { clothes->
-                    formatClothes(clothes, test)
-                }
-            }
+            foundedAfterSearchClothes.value = searchFromDb(text)
+        }
+    }
+    private suspend fun searchFromDb(text: String): List<Clothes>{
+        return withContext(Dispatchers.IO) {
+            val foundedClothes = dao.getClothesByName(text)
+            foundedClothes
         }
     }
 
-    val startButtonVisible = tonight.map { tonight ->
+    val resources = application.resources
+    fun test(list: List<Clothes>): Spanned{
+        return formatClothes(list, resources)
+    }
+
+    /*val startButtonVisible = tonight.map { tonight ->
         tonight == null
     }
     val stopButtonVisible = tonight.map { tonight ->
         tonight != null
-    }
+    }*/
 
     /*val clearButtonVisible = (nights.map { nights ->
         nights.isNotEmpty()
