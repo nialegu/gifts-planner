@@ -75,5 +75,8 @@
     <string name="shoes">Shoes</string>
     <string name="headdress">Headdress</string>
     <string name="accessories">Accessories</string>
+    <string name="shoesSize">Shoes size</string>
+    <string name="enter_shoes_size">Enter size</string>
+    <string name="chooseTheSize">Choose size</string>
 
 </resources>

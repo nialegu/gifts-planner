@@ -1,12 +1,11 @@
 package com.example.android.trackmysleepquality.clothesform
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import androidx.core.view.get
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,12 +14,9 @@ import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentClothesFormBinding
-import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
 import com.example.android.trackmysleepquality.enums.ClothesSize
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
-import com.example.android.trackmysleepquality.sleeptracker.SleepTrackerViewModel
-import com.example.android.trackmysleepquality.sleeptracker.SleepTrackerViewModelFactory
 
 class ClothesFormFragment : Fragment() {
 
@@ -41,12 +37,47 @@ class ClothesFormFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ClothesFormViewModel::class.java)
 
+        val clothesSizeRadioButtons: MutableList<RadioButton> = emptyList<RadioButton>().toMutableList()
+        ClothesSize.entries.map {
+            val rb = RadioButton(context)
+            rb.text = it.toString()
+            clothesSizeRadioButtons += rb
+        }
+        clothesSizeRadioButtons.map {
+            binding.clothesSize.addView(it)
+        }
+
+        val seasonRadioButtons: MutableList<RadioButton> = emptyList<RadioButton>().toMutableList()
+        Season.entries.map {
+            val rb = RadioButton(context)
+            rb.text = it.toString()
+            seasonRadioButtons.plusAssign(rb)
+        }
+        seasonRadioButtons.map {
+            binding.season.addView(it)
+        }
+
+        val typeRadioButtons: MutableList<RadioButton> = emptyList<RadioButton>().toMutableList()
+        Type.entries.map {
+            val rb = RadioButton(context)
+            rb.text = it.toString()
+            typeRadioButtons.plusAssign(rb)
+        }
+        typeRadioButtons.map {
+            binding.type.addView(it)
+        }
+
         var name: String
         var season: Season = Season.summer
         var type: Type = Type.top
         var description: String
         var clothesSize: ClothesSize? = null
         var shoesSize: Int? = null
+
+        binding.clothesSize.setOnCheckedChangeListener { group, id ->
+            val radio: RadioButton = group.findViewById(id)
+            clothesSize = ClothesSize.valueOf(radio.text.toString())
+        }
 
         binding.addButton.setOnClickListener {
             name = binding.nameField.editText?.text.toString()
@@ -65,21 +96,29 @@ class ClothesFormFragment : Fragment() {
 
         binding.season.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById(checkedId)
-            when (radio.text){
-                "summer" -> season = Season.summer
-                "winter" -> season = Season.winter
-                "demiseason" -> season = Season.demiseason
-            }
+            season = Season.valueOf(radio.text.toString())
         }
 
         binding.type.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById(checkedId)
-            when (radio.text){
-                "Top" -> type = Type.top
-                "Bottom" -> type = Type.bottom
-                "Shoes" -> type = Type.shoes
-                "Headdress" -> type = Type.headdress
-                "Accessories" -> type = Type.accessories
+            type = Type.valueOf(radio.text.toString())
+            when (type) {
+                Type.top, Type.bottom -> {
+                    clothesSize = null
+                    binding.clothesSize.isVisible = true
+                    binding.shoesSizeField.isVisible = false
+                }
+                Type.shoes -> {
+                    shoesSize = null
+                    binding.clothesSize.isVisible = false
+                    binding.shoesSizeField.isVisible = true
+                }
+                else -> {
+                    shoesSize = null
+                    clothesSize = null
+                    binding.clothesSize.isVisible = false
+                    binding.shoesSizeField.isVisible = false
+                }
             }
         }
 
