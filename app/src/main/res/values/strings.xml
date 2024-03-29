@@ -82,5 +82,7 @@
     <string name="searchByName">Search clothes by name</string>
     <string name="search">Search</string>
     <string name="delete">Delete</string>
+    <string name="hereIsYourClothes">Here is your clothes</string>
+    <string name="foundedItems">Founded items:</string>
 
 </resources>

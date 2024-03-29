@@ -80,7 +80,9 @@ class SleepTrackerFragment : Fragment() {
 
         viewModel.foundedAfterSearchClothes.observe(viewLifecycleOwner, Observer { clothes ->
             if (clothes.isEmpty()){
-                binding.textview.text = resources.getString(R.string.nothingWasFound)
+                val nothingText = TextView(context)
+                nothingText.text = resources.getString(R.string.nothingWasFound)
+                binding.searchClothesList.addView(nothingText)
             }
             else {
                 getViews(clothes, binding.searchClothesList)
