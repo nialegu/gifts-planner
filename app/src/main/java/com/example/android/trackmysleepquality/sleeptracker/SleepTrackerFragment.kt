@@ -52,12 +52,12 @@ class SleepTrackerFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
                 .get(SleepTrackerViewModel::class.java)
 
-        binding.startButton.setOnClickListener {
+        /* binding.startButton.setOnClickListener {
             viewModel.onStartTracking()
         }
         binding.stopButton.setOnClickListener {
             viewModel.onStopTracking()
-        }
+        }*/
         binding.clearButton.setOnClickListener {
             viewModel.onClear()
         }
@@ -72,7 +72,7 @@ class SleepTrackerFragment : Fragment() {
             binding.textview.text = clothesString
         })
 
-        viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
+       /* viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
             if (night != null) {
                 this.findNavController().navigate(
                         SleepTrackerFragmentDirections
@@ -85,7 +85,7 @@ class SleepTrackerFragment : Fragment() {
         })
         viewModel.stopButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
             binding.stopButton.isEnabled = visible
-        })
+        })*/
         viewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
             binding.clearButton.isEnabled = visible
         })

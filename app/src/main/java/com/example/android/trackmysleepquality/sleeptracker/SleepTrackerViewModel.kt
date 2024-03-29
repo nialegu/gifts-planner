@@ -66,12 +66,12 @@ class SleepTrackerViewModel(
         tonight != null
     }
 
-    val clearButtonVisible = nights.map { nights ->
+    /*val clearButtonVisible = (nights.map { nights ->
         nights.isNotEmpty()
+    }) */
+    val clearButtonVisible = clothes.map { clothes ->
+        clothes.isNotEmpty()
     }
-    /*val clearButtonVisible = clothes.map { clothes ->
-        clothes.isEmpty()
-    }*/
 
 
     init {
@@ -136,7 +136,7 @@ class SleepTrackerViewModel(
 
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
-            dao.clear()
+            //dao.clear()
             dao.clearClothes()
         }
     }
