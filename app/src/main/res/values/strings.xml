@@ -65,5 +65,15 @@
     <string name="enter_a_description">Enter a description</string>
     <string name="enter_a_name">Enter a name</string>
     <string name="clothes_form_fragment">ClothesFormFragment</string>
+    <string name="summer">summer</string>
+    <string name="winter">winter</string>
+    <string name="demiseason">demiseason</string>
+    <string name="choosethetype">Choose type</string>
+    <string name="choosetheseason">Choose season</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+    <string name="shoes">Shoes</string>
+    <string name="headdress">Headdress</string>
+    <string name="accessories">Accessories</string>
 
 </resources>
