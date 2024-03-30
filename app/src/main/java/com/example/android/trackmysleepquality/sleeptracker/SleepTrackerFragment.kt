@@ -222,7 +222,7 @@ class SleepTrackerFragment : Fragment() {
             resultList.plusAssign(linearLayout)
         }
         val textView = TextView(context)
-        textView.text = label
+        textView.text = label + "\n"
         binding.clothesList.addView(textView)
 
         resultList.map {

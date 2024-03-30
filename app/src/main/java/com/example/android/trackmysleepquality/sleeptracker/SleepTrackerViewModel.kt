@@ -27,9 +27,7 @@ import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
-import com.example.android.trackmysleepquality.formatClothes
 import com.example.android.trackmysleepquality.formatClothesForOneItem
-import com.example.android.trackmysleepquality.formatNights
 import kotlinx.coroutines.*
 
 /**
@@ -43,11 +41,7 @@ class SleepTrackerViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
-    private var tonight = MutableLiveData<SleepNight?>()
-
     val clothes = dao.getAllClothes()
-
-    private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
 
     val resources = application.resources
 
@@ -85,35 +79,6 @@ class SleepTrackerViewModel(
         clothes.isNotEmpty()
     }
 
-    init {
-        initializeTonight()
-    }
-
-    private fun initializeTonight() {
-        uiScope.launch {
-            tonight.value = getTonightFromDatabase()
-        }
-    }
-
-    fun doneNavigating() {
-        _navigateToSleepQuality.value = null
-    }
-
-    private suspend fun getTonightFromDatabase(): SleepNight? {
-        return withContext(Dispatchers.IO) {
-            var night = dao.getTonight()
-            if (night?.endTimeMillis != night?.startTimeMillis) {
-                night = null
-            }
-            night
-        }
-    }
-
-    private suspend fun update(night: SleepNight) {
-        withContext(Dispatchers.IO) {
-            dao.update(night)
-        }
-    }
 
     fun onDelete(id: Long){
         uiScope.launch {
@@ -129,7 +94,6 @@ class SleepTrackerViewModel(
     fun onClear() {
         uiScope.launch {
             clear()
-            tonight.value = null
         }
     }
     private suspend fun clear() {
