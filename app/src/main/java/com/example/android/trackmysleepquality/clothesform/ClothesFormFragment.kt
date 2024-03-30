@@ -155,6 +155,7 @@ class ClothesFormFragment : Fragment() {
             }
             else if (cl?.shoesSize != null) {
                 binding.shoesSizeField.isVisible = true
+                binding.shoesSizeField.editText?.setText(cl.shoesSize.toString(), TextView.BufferType.EDITABLE)
             }
 
             binding.addButton.setOnClickListener(null)

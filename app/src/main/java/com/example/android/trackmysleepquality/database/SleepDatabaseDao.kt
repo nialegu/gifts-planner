@@ -72,6 +72,8 @@ interface SleepDatabaseDao {
             "ORDER BY id DESC")
     fun getClothesByName(pattern: String): List<Clothes>
 
-    @Query("SELECT * FROM clothes c WHERE c.season == :season AND c.type == :type")
+    @Query("SELECT * FROM clothes c " +
+            "WHERE (c.season == :season OR :season is null) " +
+            "AND (c.type == :type OR :type is null)")
     fun getClothesByFilters(season: Season?, type: Type?): List<Clothes>
 }

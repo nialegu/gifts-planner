@@ -165,6 +165,9 @@ class SleepTrackerFragment : Fragment() {
             binding.season.setOnCheckedChangeListener(seasonOnCheckedChangeListener)
             binding.type.setOnCheckedChangeListener(typeOnCheckedChangeListener)
 
+            seasonResult = null
+            typeResult = null
+
             binding.clothesList.removeAllViews()
             getViews(clothesList, binding, resources.getString(R.string.hereIsYourClothes))
         }
