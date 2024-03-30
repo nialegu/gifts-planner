@@ -197,8 +197,17 @@ class SleepTrackerFragment : Fragment() {
             val buttonLinearLayout = LinearLayout(context)
             buttonLinearLayout.orientation = LinearLayout.VERTICAL
 
+            val updateButton = Button(context)
+            updateButton.text = resources.getString(R.string.update)
+            updateButton.setBackgroundColor(resources.getColor(R.color.green_color))
+            buttonLinearLayout.addView(updateButton)
+            updateButton.setOnClickListener {
+                this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(cl.id.toString()))
+            }
+
             val deleteButton = Button(context)
             deleteButton.text = resources.getString(R.string.delete)
+            deleteButton.setBackgroundColor(resources.getColor(R.color.red_color))
             buttonLinearLayout.addView(deleteButton)
             deleteButton.setOnClickListener {
                 viewModel.onDelete(cl.id)
@@ -207,13 +216,6 @@ class SleepTrackerFragment : Fragment() {
 
                 val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            }
-
-            val updateButton = Button(context)
-            updateButton.text = resources.getString(R.string.update)
-            buttonLinearLayout.addView(updateButton)
-            updateButton.setOnClickListener {
-                this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(cl.id.toString()))
             }
 
             linearLayout.addView(buttonLinearLayout)

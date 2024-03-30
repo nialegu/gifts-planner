@@ -20,7 +20,8 @@
     <color name="colorPrimaryDark">#9509FF</color>
     <color name="colorAccent">#677BFF</color>
 
-    <color name="green_color">#677BFF</color>
+    <color name="red_color">#EC6060</color>
+    <color name="green_color">#61FA9F</color>
     <color name="white_text_color">#f0f0f0</color>
 
 </resources>
