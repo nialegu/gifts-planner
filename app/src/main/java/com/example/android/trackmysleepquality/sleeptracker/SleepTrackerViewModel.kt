@@ -46,9 +46,6 @@ class SleepTrackerViewModel(
     private var tonight = MutableLiveData<SleepNight?>()
 
     val clothes = dao.getAllClothes()
-    val clothesItemsForView = clothes.map {
-        it.toList()
-    }
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
 
@@ -109,29 +106,6 @@ class SleepTrackerViewModel(
                 night = null
             }
             night
-        }
-    }
-
-    fun onStartTracking() {
-        uiScope.launch {
-            val newNight = SleepNight()
-            insert(newNight)
-            tonight.value = getTonightFromDatabase()
-        }
-    }
-
-    private suspend fun insert(night: SleepNight) {
-        withContext(Dispatchers.IO) {
-            dao.insert(night)
-        }
-    }
-
-    fun onStopTracking() {
-        uiScope.launch {
-            val oldNight = tonight.value ?: return@launch
-            oldNight.endTimeMillis = System.currentTimeMillis()
-            update(oldNight)
-            _navigateToSleepQuality.value = oldNight
         }
     }
 
