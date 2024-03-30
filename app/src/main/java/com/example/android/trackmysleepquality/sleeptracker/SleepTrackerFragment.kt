@@ -16,11 +16,12 @@
 
 package com.example.android.trackmysleepquality.sleeptracker
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RadioButton
@@ -94,46 +95,48 @@ class SleepTrackerFragment : Fragment() {
             this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
         }
 
+
+        var clothesList: List<Clothes> = emptyList()
         binding.searchButton.setOnClickListener {
             val searchText = binding.searchField.text.toString()
 
-            binding.searchClothesList.removeAllViews()
             if (searchText == "") {
-                binding.clothesList.isVisible = true
+                binding.clothesList.removeAllViews()
+                getViews(clothesList, binding, resources.getString(R.string.hereIsYourClothes))
                 binding.filterBar.isVisible = true
             }
             else{
                 viewModel.onSearch(searchText)
-                binding.clothesList.isVisible = false
+                binding.clothesList.removeAllViews()
                 binding.filterBar.isVisible = false
             }
         }
 
         viewModel.foundedAfterSearchClothes.observe(viewLifecycleOwner, Observer { clothes ->
-            binding.searchClothesList.removeAllViews()
             if (clothes.isEmpty()){
                 val nothingText = TextView(context)
                 nothingText.text = resources.getString(R.string.nothingWasFound)
-                binding.searchClothesList.addView(nothingText)
+                binding.clothesList.addView(nothingText)
             }
             else {
-                getViews(clothes, binding.searchClothesList, resources.getString(R.string.foundedItems))
+                getViews(clothes, binding, resources.getString(R.string.foundedItems))
             }
         })
 
-        viewModel.clothesItemsForView.observe(viewLifecycleOwner, Observer { clothes ->
+        viewModel.clothes.observe(viewLifecycleOwner, Observer { clothes ->
+            clothesList = clothes
             binding.clothesList.removeAllViews()
-            getViews(clothes, binding.clothesList, resources.getString(R.string.hereIsYourClothes))
+            getViews(clothes, binding, resources.getString(R.string.hereIsYourClothes))
         })
 
         viewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
             binding.clearButton.isEnabled = visible
         })
-
+        
         return binding.root
     }
 
-    private fun getViews(clothes: List<Clothes>, layout: LinearLayout, label: String){
+    private fun getViews(clothes: List<Clothes>, binding: FragmentSleepTrackerBinding, label: String){
         val resultList: MutableList<View> = mutableListOf()
         clothes.map {cl ->
             val linearLayout = LinearLayout(context)
@@ -148,16 +151,21 @@ class SleepTrackerFragment : Fragment() {
             linearLayout.addView(button)
             button.setOnClickListener {
                 viewModel.onDelete(cl.id)
+                binding.filterBar.isVisible = true
+                binding.searchField.text?.clear()
+
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
 
             resultList.plusAssign(linearLayout)
         }
         val textView = TextView(context)
         textView.text = label
-        layout.addView(textView)
+        binding.clothesList.addView(textView)
 
         resultList.map {
-            layout.addView(it)
+            binding.clothesList.addView(it)
         }
     }
 }
