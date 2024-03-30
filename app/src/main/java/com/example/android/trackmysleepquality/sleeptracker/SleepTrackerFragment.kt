@@ -116,12 +116,12 @@ class SleepTrackerFragment : Fragment() {
                 binding.searchClothesList.addView(nothingText)
             }
             else {
-                getViews(clothes, binding.searchClothesList)
+                getViews(clothes, binding.searchClothesList, resources.getString(R.string.foundedItems))
             }
         })
 
         viewModel.clothesItemsForView.observe(viewLifecycleOwner, Observer { clothes ->
-            getViews(clothes, binding.clothesList)
+            getViews(clothes, binding.clothesList, resources.getString(R.string.hereIsYourClothes))
         })
 
         viewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
@@ -131,7 +131,7 @@ class SleepTrackerFragment : Fragment() {
         return binding.root
     }
 
-    private fun getViews(clothes: List<Clothes>, layout: LinearLayout){
+    private fun getViews(clothes: List<Clothes>, layout: LinearLayout, label: String){
         val resultList: MutableList<View> = mutableListOf()
         clothes.map {cl ->
             val linearLayout = LinearLayout(context)
@@ -151,6 +151,10 @@ class SleepTrackerFragment : Fragment() {
 
             resultList.plusAssign(linearLayout)
         }
+        val textView = TextView(context)
+        textView.text = label
+        layout.addView(textView)
+
         resultList.map {
             layout.addView(it)
         }
