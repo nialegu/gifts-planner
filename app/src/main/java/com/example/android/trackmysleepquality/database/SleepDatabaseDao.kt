@@ -26,25 +26,6 @@ import com.example.android.trackmysleepquality.enums.Type
 
 @Dao
 interface SleepDatabaseDao {
-
-    @Insert
-    fun insert(night: SleepNight)
-
-    @Update
-    fun update(night: SleepNight)
-
-    @Query("SELECT * FROM sleep_quality_table WHERE id = :key")
-    fun get(key: Long): SleepNight?
-
-    @Query("DELETE FROM sleep_quality_table")
-    fun clear()
-
-    @Query("SELECT * FROM sleep_quality_table ORDER BY id DESC")
-    fun getAllNights(): LiveData<List<SleepNight>>
-
-    @Query("SELECT * FROM sleep_quality_table ORDER BY id DESC LIMIT 1")
-    fun getTonight(): SleepNight?
-
     @Insert
     fun insertClothes(clothes: Clothes)
 
