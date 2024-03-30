@@ -110,6 +110,7 @@ class SleepTrackerFragment : Fragment() {
         }
 
         viewModel.foundedAfterSearchClothes.observe(viewLifecycleOwner, Observer { clothes ->
+            binding.searchClothesList.removeAllViews()
             if (clothes.isEmpty()){
                 val nothingText = TextView(context)
                 nothingText.text = resources.getString(R.string.nothingWasFound)
@@ -121,6 +122,7 @@ class SleepTrackerFragment : Fragment() {
         })
 
         viewModel.clothesItemsForView.observe(viewLifecycleOwner, Observer { clothes ->
+            binding.clothesList.removeAllViews()
             getViews(clothes, binding.clothesList, resources.getString(R.string.hereIsYourClothes))
         })
 
@@ -145,7 +147,6 @@ class SleepTrackerFragment : Fragment() {
             button.text = resources.getString(R.string.delete)
             linearLayout.addView(button)
             button.setOnClickListener {
-                layout.removeView(linearLayout)
                 viewModel.onDelete(cl.id)
             }
 
