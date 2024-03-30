@@ -192,16 +192,23 @@ class SleepTrackerFragment : Fragment() {
             item.text = viewModel.getStringsForOneItem(cl)
             linearLayout.addView(item)
 
-            val button = Button(context)
-            button.text = resources.getString(R.string.delete)
-            linearLayout.addView(button)
-            button.setOnClickListener {
+            val deleteButton = Button(context)
+            deleteButton.text = resources.getString(R.string.delete)
+            linearLayout.addView(deleteButton)
+            deleteButton.setOnClickListener {
                 viewModel.onDelete(cl.id)
                 binding.filterBar.isVisible = true
                 binding.searchField.text?.clear()
 
                 val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+
+            val updateButton = Button(context)
+            updateButton.text = resources.getString(R.string.update)
+            linearLayout.addView(updateButton)
+            updateButton.setOnClickListener {
+                this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
             }
 
             resultList.plusAssign(linearLayout)

@@ -87,5 +87,6 @@
     <string name="filter">Filter</string>
     <string name="searchByNameOrDescription">Search by name or description</string>
     <string name="clearFilters">Clear filters</string>
+    <string name="update">Update</string>
 
 </resources>
