@@ -62,6 +62,18 @@ class SleepTrackerFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
                 .get(SleepTrackerViewModel::class.java)
 
+        var seasonResult: Season? = null
+        var typeResult: Type? = null
+
+        val seasonOnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            seasonResult = Season.valueOf(group.findViewById<RadioButton>(checkedId).text.toString())
+        }
+        val typeOnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            typeResult = Type.valueOf(group.findViewById<RadioButton>(checkedId).text.toString())
+        }
+        binding.season.setOnCheckedChangeListener(seasonOnCheckedChangeListener)
+        binding.type.setOnCheckedChangeListener(typeOnCheckedChangeListener)
+
         val seasonRadioButtons: MutableList<RadioButton> = mutableListOf()
         Season.entries.map {
             val rb = RadioButton(context)
@@ -104,12 +116,20 @@ class SleepTrackerFragment : Fragment() {
             if (searchText == "") {
                 binding.clothesList.removeAllViews()
                 getViews(clothesList, binding, resources.getString(R.string.hereIsYourClothes))
+
                 binding.filterBar.isVisible = true
             }
             else{
                 viewModel.onSearch(searchText)
                 binding.clothesList.removeAllViews()
+
                 binding.filterBar.isVisible = false
+                binding.season.setOnCheckedChangeListener(null)
+                binding.type.setOnCheckedChangeListener(null)
+                binding.season.clearCheck()
+                binding.type.clearCheck()
+                binding.season.setOnCheckedChangeListener(seasonOnCheckedChangeListener)
+                binding.type.setOnCheckedChangeListener(typeOnCheckedChangeListener)
             }
         }
         viewModel.foundedAfterSearchClothes.observe(viewLifecycleOwner, Observer { clothes ->
@@ -122,18 +142,6 @@ class SleepTrackerFragment : Fragment() {
                 getViews(clothes, binding, resources.getString(R.string.foundedItems))
             }
         })
-
-        var seasonResult: Season? = null
-        var typeResult: Type? = null
-
-        val seasonOnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
-            seasonResult = Season.valueOf(group.findViewById<RadioButton>(checkedId).text.toString())
-        }
-        val typeOnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
-            typeResult = Type.valueOf(group.findViewById<RadioButton>(checkedId).text.toString())
-        }
-        binding.season.setOnCheckedChangeListener(seasonOnCheckedChangeListener)
-        binding.type.setOnCheckedChangeListener(typeOnCheckedChangeListener)
 
         binding.filterButton.setOnClickListener {
             binding.clothesList.removeAllViews()
