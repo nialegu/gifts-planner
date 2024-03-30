@@ -43,20 +43,12 @@ class SleepTrackerViewModel(
 
     private var tonight = MutableLiveData<SleepNight?>()
 
-    private val nights = dao.getAllNights()
     val clothes = dao.getAllClothes()
+    val clothesItemsForView = clothes.map {
+        it.toList()
+    }
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
-
-    val navigateToSleepQuality: LiveData<SleepNight?>
-        get() = _navigateToSleepQuality
-    val nightsString = nights.map { nights ->
-        formatNights(nights, application.resources)
-    }
-
-    val clothesString = clothes.map { clothes ->
-        formatClothes(clothes, application.resources)
-    }
 
     val foundedAfterSearchClothes = MutableLiveData<List<Clothes>>()
     fun onSearch(text: String){
@@ -70,29 +62,14 @@ class SleepTrackerViewModel(
             foundedClothes
         }
     }
-
     val resources = application.resources
-    fun getStringsForListClothes(list: List<Clothes>): Spanned{
-        return formatClothes(list, resources)
-    }
     fun getStringsForOneItem(cl: Clothes): Spanned{
         return formatClothesForOneItem(cl, resources)
     }
 
-    /*val startButtonVisible = tonight.map { tonight ->
-        tonight == null
-    }
-    val stopButtonVisible = tonight.map { tonight ->
-        tonight != null
-    }*/
-
-    /*val clearButtonVisible = (nights.map { nights ->
-        nights.isNotEmpty()
-    }) */
     val clearButtonVisible = clothes.map { clothes ->
         clothes.isNotEmpty()
     }
-
 
     init {
         initializeTonight()
@@ -166,7 +143,6 @@ class SleepTrackerViewModel(
     }
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
-            //dao.clear()
             dao.clearClothes()
         }
     }

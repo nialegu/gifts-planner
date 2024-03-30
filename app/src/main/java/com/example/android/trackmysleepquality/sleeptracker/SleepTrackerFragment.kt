@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -34,6 +35,8 @@ import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
+import com.example.android.trackmysleepquality.enums.Season
+import com.example.android.trackmysleepquality.enums.Type
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -57,7 +60,33 @@ class SleepTrackerFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
                 .get(SleepTrackerViewModel::class.java)
 
+        val seasonRadioButtons: MutableList<RadioButton> = mutableListOf()
+        Season.entries.map {
+            val rb = RadioButton(context)
+            rb.text = it.toString()
+            seasonRadioButtons.plusAssign(rb)
+        }
+        seasonRadioButtons.map {
+            binding.season.addView(it)
+        }
+
+        val typeRadioButtons: MutableList<RadioButton> = mutableListOf()
+        Type.entries.map {
+            val rb = RadioButton(context)
+            rb.text = it.toString()
+            typeRadioButtons.plusAssign(rb)
+        }
+        typeRadioButtons.map {
+            binding.type.addView(it)
+        }
+
         binding.clearButton.setOnClickListener {
+            binding.clothesList.removeAllViews()
+
+            val textView = TextView(context)
+            textView.text = resources.getString(R.string.hereIsYourClothes)
+            binding.clothesList.addView(textView)
+
             viewModel.onClear()
         }
         binding.createButton.setOnClickListener {
@@ -71,10 +100,12 @@ class SleepTrackerFragment : Fragment() {
             binding.searchClothesList.removeAllViews()
             if (searchText == "") {
                 binding.clothesList.isVisible = true
+                binding.filterBar.isVisible = true
             }
             else{
                 viewModel.onSearch(searchText)
                 binding.clothesList.isVisible = false
+                binding.filterBar.isVisible = false
             }
         }
 
@@ -89,7 +120,7 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
-        viewModel.clothes.observe(viewLifecycleOwner, Observer { clothes ->
+        viewModel.clothesItemsForView.observe(viewLifecycleOwner, Observer { clothes ->
             getViews(clothes, binding.clothesList)
         })
 
@@ -112,14 +143,14 @@ class SleepTrackerFragment : Fragment() {
 
             val button = Button(context)
             button.text = resources.getString(R.string.delete)
+            linearLayout.addView(button)
             button.setOnClickListener {
+                layout.removeView(linearLayout)
                 viewModel.onDelete(cl.id)
             }
-            linearLayout.addView(button)
 
             resultList.plusAssign(linearLayout)
         }
-        //layout.removeAllViews()
         resultList.map {
             layout.addView(it)
         }

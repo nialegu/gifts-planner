@@ -84,5 +84,7 @@
     <string name="delete">Delete</string>
     <string name="hereIsYourClothes">Here is your clothes</string>
     <string name="foundedItems">Founded items:</string>
+    <string name="filter">Filter</string>
+    <string name="searchByNameOrDescription">Search by name or description</string>
 
 </resources>

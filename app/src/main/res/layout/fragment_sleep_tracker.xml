@@ -36,40 +36,94 @@
              better and more efficient way to do this, and you will learn about
              RecyclerView in a later lesson. -->
         <LinearLayout
-            android:id="@+id/search"
+            android:id="@+id/filterAndSearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/search_field_layout"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/search"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:hint="@string/search"
-                app:placeholderText="@string/searchByName"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_field"
-                    android:layout_width="200dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/search_field_layout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@+id/search_button"
-                    android:minHeight="48dp"
-                    android:inputType="text"
-                    />
+                    android:padding="10dp"
+                    android:hint="@string/search"
+                    app:placeholderText="@string/searchByNameOrDescription"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/search_field"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@+id/search_button"
+                        android:minHeight="48dp"
+                        android:inputType="text"
+                        />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/search_button"
-                style="@style/SleepButtons"
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/search_button"
+                    style="@style/SleepButtons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search">
+
+                </Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/filterBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/search">
+                android:orientation="horizontal"
+                app:layout_constraintHorizontal_chainStyle="spread">
+                <RadioGroup
+                    android:id="@+id/season"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/type"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choosetheseason"/>
 
-            </Button>
+                </RadioGroup>
 
+                <RadioGroup
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/season"
+                    app:layout_constraintEnd_toStartOf="@id/filter_button"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choosethetype"/>
+
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/filter_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SleepButtons"
+                    android:text="@string/filter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/type"
+                    />
+            </LinearLayout>
         </LinearLayout>
 
         <ScrollView
@@ -79,7 +133,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search">
+            app:layout_constraintTop_toBottomOf="@+id/filterAndSearchBar">
 
             <!-- In the TextView, we can access the nightsString LiveData,
                  which keeps it displayed and updated in the TextView
