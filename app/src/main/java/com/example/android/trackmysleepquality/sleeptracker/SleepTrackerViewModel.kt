@@ -25,6 +25,8 @@ import androidx.lifecycle.map
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
+import com.example.android.trackmysleepquality.enums.Season
+import com.example.android.trackmysleepquality.enums.Type
 import com.example.android.trackmysleepquality.formatClothes
 import com.example.android.trackmysleepquality.formatClothesForOneItem
 import com.example.android.trackmysleepquality.formatNights
@@ -50,6 +52,8 @@ class SleepTrackerViewModel(
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
 
+    val resources = application.resources
+
     val foundedAfterSearchClothes = MutableLiveData<List<Clothes>>()
     fun onSearch(text: String){
         uiScope.launch {
@@ -62,7 +66,20 @@ class SleepTrackerViewModel(
             foundedClothes
         }
     }
-    val resources = application.resources
+
+    val foundedAfterFilterClothes = MutableLiveData<List<Clothes>>()
+    fun onFilter(season: Season?, type: Type?){
+        uiScope.launch {
+            foundedAfterFilterClothes.value = filterFromDb(season, type)
+        }
+    }
+    private suspend fun filterFromDb(season: Season?, type: Type?): List<Clothes>{
+        return withContext(Dispatchers.IO) {
+            val foundedClothes = dao.getClothesByFilters(season, type)
+            foundedClothes
+        }
+    }
+
     fun getStringsForOneItem(cl: Clothes): Spanned{
         return formatClothesForOneItem(cl, resources)
     }

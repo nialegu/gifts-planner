@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -111,7 +112,6 @@ class SleepTrackerFragment : Fragment() {
                 binding.filterBar.isVisible = false
             }
         }
-
         viewModel.foundedAfterSearchClothes.observe(viewLifecycleOwner, Observer { clothes ->
             if (clothes.isEmpty()){
                 val nothingText = TextView(context)
@@ -122,6 +122,44 @@ class SleepTrackerFragment : Fragment() {
                 getViews(clothes, binding, resources.getString(R.string.foundedItems))
             }
         })
+
+        var seasonResult: Season? = null
+        var typeResult: Type? = null
+
+        val seasonOnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            seasonResult = Season.valueOf(group.findViewById<RadioButton>(checkedId).text.toString())
+        }
+        val typeOnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            typeResult = Type.valueOf(group.findViewById<RadioButton>(checkedId).text.toString())
+        }
+        binding.season.setOnCheckedChangeListener(seasonOnCheckedChangeListener)
+        binding.type.setOnCheckedChangeListener(typeOnCheckedChangeListener)
+
+        binding.filterButton.setOnClickListener {
+            binding.clothesList.removeAllViews()
+            viewModel.onFilter(seasonResult, typeResult)
+        }
+        viewModel.foundedAfterFilterClothes.observe(viewLifecycleOwner, Observer { clothes ->
+            if (clothes.isEmpty()){
+                val nothingText = TextView(context)
+                nothingText.text = resources.getString(R.string.nothingWasFound)
+                binding.clothesList.addView(nothingText)
+            }
+            else {
+                getViews(clothes, binding, resources.getString(R.string.foundedItems))
+            }
+        })
+        binding.clearFilterButton.setOnClickListener {
+            binding.season.setOnCheckedChangeListener(null)
+            binding.type.setOnCheckedChangeListener(null)
+            binding.season.clearCheck()
+            binding.type.clearCheck()
+            binding.season.setOnCheckedChangeListener(seasonOnCheckedChangeListener)
+            binding.type.setOnCheckedChangeListener(typeOnCheckedChangeListener)
+
+            binding.clothesList.removeAllViews()
+            getViews(clothesList, binding, resources.getString(R.string.hereIsYourClothes))
+        }
 
         viewModel.clothes.observe(viewLifecycleOwner, Observer { clothes ->
             clothesList = clothes

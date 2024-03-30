@@ -21,6 +21,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.android.trackmysleepquality.enums.Season
+import com.example.android.trackmysleepquality.enums.Type
 
 @Dao
 interface SleepDatabaseDao {
@@ -69,4 +71,7 @@ interface SleepDatabaseDao {
             "OR c.description LIKE :pattern " +
             "ORDER BY id DESC")
     fun getClothesByName(pattern: String): List<Clothes>
+
+    @Query("SELECT * FROM clothes c WHERE c.season == :season AND c.type == :type")
+    fun getClothesByFilters(season: Season?, type: Type?): List<Clothes>
 }

@@ -86,5 +86,6 @@
     <string name="foundedItems">Founded items:</string>
     <string name="filter">Filter</string>
     <string name="searchByNameOrDescription">Search by name or description</string>
+    <string name="clearFilters">Clear filters</string>
 
 </resources>
