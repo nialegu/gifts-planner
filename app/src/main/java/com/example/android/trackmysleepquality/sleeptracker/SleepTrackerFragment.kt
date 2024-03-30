@@ -105,7 +105,7 @@ class SleepTrackerFragment : Fragment() {
         }
         binding.createButton.setOnClickListener {
             binding.searchField.text?.clear()
-            this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
+            this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
         }
 
 
@@ -208,7 +208,7 @@ class SleepTrackerFragment : Fragment() {
             updateButton.text = resources.getString(R.string.update)
             linearLayout.addView(updateButton)
             updateButton.setOnClickListener {
-                this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment())
+                this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(cl.id.toString()))
             }
 
             resultList.plusAssign(linearLayout)

@@ -17,7 +17,7 @@ data class Clothes (
     var name: String,
 
     @ColumnInfo(name = "season")
-    val season: Season,
+    var season: Season,
 
     @ColumnInfo(name = "type")
     var type: Type,

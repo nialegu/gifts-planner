@@ -46,10 +46,10 @@ interface SleepDatabaseDao {
     fun getTonight(): SleepNight?
 
     @Insert
-    fun insertClothes(night: Clothes)
+    fun insertClothes(clothes: Clothes)
 
     @Update
-    fun updateClothes(night: Clothes)
+    fun updateClothes(clothes: Clothes)
 
     @Query("SELECT * FROM clothes WHERE id = :key")
     fun getSingleClothes(key: Long): Clothes?

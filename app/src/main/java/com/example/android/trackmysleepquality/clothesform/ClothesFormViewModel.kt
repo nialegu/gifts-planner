@@ -1,9 +1,12 @@
 package com.example.android.trackmysleepquality.clothesform
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
+import com.example.android.trackmysleepquality.database.SleepNight
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,6 +20,29 @@ class ClothesFormViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
+    var currentClothesItem = MutableLiveData<Clothes?>()
+    fun getClothesById(id: Long){
+        uiScope.launch {
+            currentClothesItem.value = getById(id)
+        }
+    }
+    private suspend fun getById(id: Long) : Clothes? {
+        return withContext(Dispatchers.IO) {
+            dao.getSingleClothes(id)
+        }
+    }
+
+    fun updateCurrentClothes(clothes: Clothes){
+        uiScope.launch {
+            update(clothes)
+        }
+    }
+    private suspend fun update(clothes: Clothes) {
+        withContext(Dispatchers.IO) {
+            dao.updateClothes(clothes)
+            Log.i("sadsadsad", clothes.toString())
+        }
+    }
 
     fun insertNewClothes(clothes: Clothes){
         uiScope.launch {

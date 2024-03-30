@@ -37,7 +37,12 @@
             android:id="@+id/action_sleep_tracker_fragment_to_clothes_form_fragment"
             app:destination="@id/clothes_form_fragment"
             app:enterAnim="@anim/slide_in_right"
-            app:popEnterAnim="@anim/slide_in_left"/>
+            app:popEnterAnim="@anim/slide_in_left">
+            <argument
+                android:name="clothesId"
+                app:argType="string" />
+        </action>
+
     </fragment>
 
     <fragment
