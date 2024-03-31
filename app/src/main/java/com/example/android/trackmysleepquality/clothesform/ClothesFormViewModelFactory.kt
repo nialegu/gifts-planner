@@ -3,12 +3,10 @@ package com.example.android.trackmysleepquality.clothesform
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.trackmysleepquality.database.Clothes
-import com.example.android.trackmysleepquality.database.SleepDatabaseDao
-import com.example.android.trackmysleepquality.sleeptracker.SleepTrackerViewModel
+import com.example.android.trackmysleepquality.database.AppDatabaseDao
 
 class ClothesFormViewModelFactory(
-    private val dao: SleepDatabaseDao,
+    private val dao: AppDatabaseDao,
     private val application: Application) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

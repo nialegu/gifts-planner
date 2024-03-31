@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.trackmysleepquality.sleeptracker
+package com.example.android.trackmysleepquality.clotheslist
 
 import android.app.Application
 import android.text.Spanned
@@ -22,7 +22,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.android.trackmysleepquality.database.Clothes
-import com.example.android.trackmysleepquality.database.SleepDatabaseDao
+import com.example.android.trackmysleepquality.database.AppDatabaseDao
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
 import com.example.android.trackmysleepquality.formatClothesForOneItem
@@ -31,8 +31,8 @@ import kotlinx.coroutines.*
 /**
  * ViewModel for SleepTrackerFragment.
  */
-class SleepTrackerViewModel(
-        private val dao: SleepDatabaseDao,
+class ClothesListViewModel(
+        private val dao: AppDatabaseDao,
         application: Application) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()

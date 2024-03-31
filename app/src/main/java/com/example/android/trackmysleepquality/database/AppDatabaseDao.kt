@@ -25,7 +25,7 @@ import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
 
 @Dao
-interface SleepDatabaseDao {
+interface AppDatabaseDao {
     @Insert
     fun insertClothes(clothes: Clothes)
 

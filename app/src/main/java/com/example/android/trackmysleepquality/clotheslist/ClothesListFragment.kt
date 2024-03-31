@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.trackmysleepquality.sleeptracker
+package com.example.android.trackmysleepquality.clotheslist
 
 import android.content.Context
 import android.os.Bundle
@@ -35,8 +35,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.Clothes
-import com.example.android.trackmysleepquality.database.SleepDatabase
-import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
+import com.example.android.trackmysleepquality.database.AppDatabase
+import com.example.android.trackmysleepquality.databinding.FragmentClothesListBinding
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
 
@@ -45,22 +45,22 @@ import com.example.android.trackmysleepquality.enums.Type
  * a database. Cumulative data is displayed in a simple scrollable TextView.
  * (Because we have not learned about RecyclerView yet.)
  */
-class SleepTrackerFragment : Fragment() {
+class ClothesListFragment : Fragment() {
 
-    private lateinit var viewModel: SleepTrackerViewModel
+    private lateinit var viewModel: ClothesListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         // Get a reference to the binding object and inflate the fragment views.
-        val binding: FragmentSleepTrackerBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_sleep_tracker, container, false)
+        val binding: FragmentClothesListBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_clothes_list, container, false)
 
         val application = requireNotNull(this.activity).application
-        val dao = SleepDatabase.getInstance(application).getSleepDatabaseDao()
-        val viewModelFactory = SleepTrackerViewModelFactory(dao, application)
+        val dao = AppDatabase.getInstance(application).getAppDatabaseDao()
+        val viewModelFactory = ClothesListViewModelFactory(dao, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
-                .get(SleepTrackerViewModel::class.java)
+                .get(ClothesListViewModel::class.java)
 
         var seasonResult: Season? = null
         var typeResult: Type? = null
@@ -105,7 +105,7 @@ class SleepTrackerFragment : Fragment() {
         }
         binding.createButton.setOnClickListener {
             binding.searchField.text?.clear()
-            this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
+            this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
         }
 
 
@@ -185,7 +185,7 @@ class SleepTrackerFragment : Fragment() {
         return binding.root
     }
 
-    private fun getViews(clothes: List<Clothes>, binding: FragmentSleepTrackerBinding, label: String){
+    private fun getViews(clothes: List<Clothes>, binding: FragmentClothesListBinding, label: String){
         val resultList: MutableList<View> = mutableListOf()
         clothes.map {cl ->
             val linearLayout = LinearLayout(context)
@@ -202,7 +202,7 @@ class SleepTrackerFragment : Fragment() {
             updateButton.setBackgroundColor(resources.getColor(R.color.green_color))
             buttonLinearLayout.addView(updateButton)
             updateButton.setOnClickListener {
-                this.findNavController().navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(cl.id.toString()))
+                this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(cl.id.toString()))
             }
 
             val deleteButton = Button(context)

@@ -1,8 +1,6 @@
 package com.example.android.trackmysleepquality.clothesform
 
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.Clothes
-import com.example.android.trackmysleepquality.database.SleepDatabase
+import com.example.android.trackmysleepquality.database.AppDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentClothesFormBinding
 import com.example.android.trackmysleepquality.enums.ClothesSize
 import com.example.android.trackmysleepquality.enums.Season
@@ -36,7 +34,7 @@ class ClothesFormFragment : Fragment() {
             inflater, R.layout.fragment_clothes_form, container, false)//
 
         val application = requireNotNull(this.activity).application
-        val dao = SleepDatabase.getInstance(application).getSleepDatabaseDao()
+        val dao = AppDatabase.getInstance(application).getAppDatabaseDao()
         val viewModelFactory = ClothesFormViewModelFactory(dao, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ClothesFormViewModel::class.java)

@@ -21,21 +21,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Clothes::class], version = 1, exportSchema = false)
-abstract class SleepDatabase : RoomDatabase() {
+@Database(entities = [Clothes::class, Plan::class, Gift::class, Receiver::class], version = 1, exportSchema = false)
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun getSleepDatabaseDao(): SleepDatabaseDao
+    abstract fun getAppDatabaseDao(): AppDatabaseDao
 
     companion object {
         @Volatile
-        private var INSTANCE: SleepDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): SleepDatabase {
+        fun getInstance(context: Context): AppDatabase {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.applicationContext,
-                            SleepDatabase::class.java, "sleep_tracker_db")
+                        AppDatabase::class.java, "sleep_tracker_db")
                             .build()
                     INSTANCE = instance
                 }
