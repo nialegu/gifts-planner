@@ -18,14 +18,17 @@ package com.example.android.trackmysleepquality.clotheslist
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -64,6 +67,15 @@ class ClothesListFragment : Fragment() {
 
         var seasonResult: Season? = null
         var typeResult: Type? = null
+
+
+        var spinner: Spinner = Spinner(context);
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            }
+        }
 
         val seasonOnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
             seasonResult = Season.valueOf(group.findViewById<RadioButton>(checkedId).text.toString())
@@ -104,10 +116,14 @@ class ClothesListFragment : Fragment() {
             viewModel.onClear()
         }
         binding.createButton.setOnClickListener {
-            binding.searchField.text?.clear()
-            this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
+            viewModel.insertNewPlan()
+            //binding.searchField.text?.clear()
+            //this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
         }
 
+        viewModel.plans.observe(viewLifecycleOwner, Observer {plans ->
+            Log.i("asdasdasd", plans.toString())
+        })
 
         var clothesList: List<Clothes> = emptyList()
         binding.searchButton.setOnClickListener {
@@ -192,7 +208,7 @@ class ClothesListFragment : Fragment() {
             linearLayout.orientation = LinearLayout.HORIZONTAL
 
             val item = TextView(context)
-            item.text = viewModel.getStringsForOneItem(cl)
+            item.text = viewModel.getClothesStringsForOneItem(cl)
 
             val buttonLinearLayout = LinearLayout(context)
             buttonLinearLayout.orientation = LinearLayout.VERTICAL

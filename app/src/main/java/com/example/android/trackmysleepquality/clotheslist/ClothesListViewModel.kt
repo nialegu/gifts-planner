@@ -17,16 +17,25 @@
 package com.example.android.trackmysleepquality.clotheslist
 
 import android.app.Application
+import android.icu.text.SimpleDateFormat
 import android.text.Spanned
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.AppDatabaseDao
+import com.example.android.trackmysleepquality.database.Gift
+import com.example.android.trackmysleepquality.database.Plan
+import com.example.android.trackmysleepquality.database.PlanReceiverGift
+import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
 import com.example.android.trackmysleepquality.formatClothesForOneItem
 import kotlinx.coroutines.*
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Date
 
 /**
  * ViewModel for SleepTrackerFragment.
@@ -40,6 +49,55 @@ class ClothesListViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
     val clothes = dao.getAllClothes()
+    val plans = dao.getAllPlans()
+
+    fun insertNewPlan(){
+        val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
+
+        val plan: Plan = Plan(
+            pId = 1L,
+            holiday = "Holiday",
+            date = simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
+        )
+        val receiver: Receiver = Receiver(
+            rId = 2L,
+            receiverName = "Leonid"
+        )
+        val gift: Gift = Gift(
+            gId = 3L,
+            giftName = "gift",
+            price = 200.0
+        )
+        val prg: PlanReceiverGift = PlanReceiverGift(
+            1L,
+            2L,
+            3L
+        )
+        uiScope.launch {
+            insert(plan, receiver, gift, prg)
+        }
+    }
+    private suspend fun insert(plan: Plan, receiver: Receiver, gift: Gift, prg: PlanReceiverGift, ) {
+        withContext(Dispatchers.IO) {
+            dao.insertPlanReceiverGift(prg)
+            dao.insertPlan(plan)
+            dao.insertReceiver(receiver)
+            dao.insertGift(gift)
+        }
+    }
+
+    val foundedAfterDateFilter = MutableLiveData<List<Plan>>()
+    /*fun onDateFilter(date: LocalDateTime){
+        uiScope.launch {
+            foundedAfterDateFilter.value = getByDate(date)
+        }
+    }
+    private suspend fun getByDate(date: LocalDateTime): List<Plan>{
+        return withContext(Dispatchers.IO) {
+            val foundedPlans = dao.getPlansByDate(date)
+            foundedPlans
+        }
+    }*/
 
     val resources = application.resources
 
@@ -69,14 +127,16 @@ class ClothesListViewModel(
         }
     }
 
-    fun getStringsForOneItem(cl: Clothes): Spanned{
+    fun getClothesStringsForOneItem(cl: Clothes): Spanned{
         return formatClothesForOneItem(cl, resources)
     }
+   /* fun getPlansStringForOneItem(plan: PlanWithReceiver): Spanned{
+        return formatPlansForOneItem(plan, resources)
+    }*/
 
     val clearButtonVisible = clothes.map { clothes ->
         clothes.isNotEmpty()
     }
-
 
     fun onDelete(id: Long){
         uiScope.launch {

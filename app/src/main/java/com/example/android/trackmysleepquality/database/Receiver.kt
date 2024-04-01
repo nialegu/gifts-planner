@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey
 @Entity("receiver")
 data class Receiver(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Long = 0L,
+    var rId: Long = 0L,
 
     @ColumnInfo(name = "name")
-    var name: String
+    var receiverName: String,
 )

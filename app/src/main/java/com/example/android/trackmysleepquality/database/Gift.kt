@@ -2,17 +2,17 @@ package com.example.android.trackmysleepquality.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity("receiver")
+@Entity("gift")
 data class Gift(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Long = 0L,
+    var gId: Long = 0L,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    var giftName: String,
 
     @ColumnInfo(name = "price")
-    var price: Double
+    var price: Double,
 )
