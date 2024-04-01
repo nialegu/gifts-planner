@@ -19,7 +19,6 @@ package com.example.android.trackmysleepquality.clotheslist
 import android.app.Application
 import android.icu.text.SimpleDateFormat
 import android.text.Spanned
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
@@ -27,15 +26,14 @@ import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.AppDatabaseDao
 import com.example.android.trackmysleepquality.database.Gift
 import com.example.android.trackmysleepquality.database.Plan
-import com.example.android.trackmysleepquality.database.PlanReceiverGift
+import com.example.android.trackmysleepquality.database.PlanGifts
+import com.example.android.trackmysleepquality.database.PlanReceiver
 import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
 import com.example.android.trackmysleepquality.formatClothesForOneItem
 import kotlinx.coroutines.*
 import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.Date
 
 /**
@@ -56,45 +54,43 @@ class ClothesListViewModel(
         val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
 
         val plan: Plan = Plan(
-            1L,
             holiday = "Holiday",
             date = simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
         )
         val receiver: Receiver = Receiver(
-            2L,
             receiverName = "Leonid"
         )
         val gift: Gift = Gift(
-            3L,
             giftName = "gift",
             price = 200.0
         )
-        val prg: PlanReceiverGift = PlanReceiverGift(
-            1L,
-            2L,
-            3L
-        )
         uiScope.launch {
-            insert(plan, receiver, gift, prg)
+            insertPlanWithGift(insertPlan(plan, receiver), gift)
         }
     }
-    private suspend fun insert(plan: Plan, receiver: Receiver, gift: Gift, planReceiverGift: PlanReceiverGift) {
-        withContext(Dispatchers.IO) {
+    private suspend fun insertPlan(plan: Plan, receiver: Receiver): Long {
+        return withContext(Dispatchers.IO) {
             val newPlanId = dao.insertPlan(plan)
             val newReceiverId = dao.insertReceiver(receiver)
-            val newGiftId = dao.insertGift(gift)
 
-            val prg: PlanReceiverGift = PlanReceiverGift(
+            val pr = PlanReceiver(
                 newPlanId,
                 newReceiverId,
-                newGiftId
             )
-
-            insertRelations(prg)
+            dao.insertPlanReceiver(pr)
+            newPlanId
         }
     }
-    private fun insertRelations(prg: PlanReceiverGift){
-        dao.insertPlanReceiverGift(prg)
+
+    private suspend fun insertPlanWithGift(planId: Long, gift: Gift){
+        withContext(Dispatchers.IO) {
+            val newGiftId = dao.insertGift(gift)
+            val pg = PlanGifts(
+                planId,
+                newGiftId,
+            )
+            dao.insertPlanGift(pg)
+        }
     }
 
     val foundedAfterDateFilter = MutableLiveData<List<Plan>>()

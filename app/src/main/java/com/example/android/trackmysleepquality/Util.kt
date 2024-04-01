@@ -24,7 +24,7 @@ import android.text.Spanned
 import androidx.annotation.RequiresApi
 import androidx.core.text.HtmlCompat
 import com.example.android.trackmysleepquality.database.Clothes
-import com.example.android.trackmysleepquality.database.PlanWithReceiverAndGifts
+import com.example.android.trackmysleepquality.database.PlanWithReceiver
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
@@ -109,7 +109,7 @@ fun formatClothesForOneItem(cl: Clothes, resources: Resources): Spanned {
 }
 
 
-fun formatPlansForOneItem(plan: PlanWithReceiverAndGifts, resources: Resources): Spanned {
+fun formatPlansForOneItem(plan: PlanWithReceiver, resources: Resources): Spanned {
     val format = SimpleDateFormat("dd.MM.yyyy")
 
     val sb = StringBuilder()
@@ -120,10 +120,10 @@ fun formatPlansForOneItem(plan: PlanWithReceiverAndGifts, resources: Resources):
         append("\t${format.format(Date(plan.plan.date))}<br>")
         append(resources.getString(R.string.receiver))
         append("\t${plan.receiver.receiverName}<br>")
-        append(resources.getString(R.string.giftName))
+        /*append(resources.getString(R.string.giftName))
         append("\t${plan.gifts[0].giftName}<br>")
         append(resources.getString(R.string.price))
-        append("\t${plan.gifts[0].price.toString()}<br>")
+        append("\t${plan.gifts[0].price.toString()}<br>")*/
     }
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)

@@ -7,37 +7,48 @@ import androidx.room.Relation
 
 @Entity(primaryKeys = [
     "planId",
-    "receiverId",
-    "giftId"
+    "receiverId"
 ])
-data class PlanReceiverGift(
+data class PlanReceiver(
     val planId: Long,
     val receiverId: Long,
-    val giftId: Long,
 )
 
-data class PlanWithReceiverAndGifts(
+data class PlanWithReceiver(
     @Embedded var plan: Plan,
 
     @Relation(parentColumn = "pId",
         entityColumn = "rId",
         entity = Receiver::class,
         associateBy = Junction(
-            value = PlanReceiverGift::class,
+            value = PlanReceiver::class,
             parentColumn = "planId",
             entityColumn = "receiverId"
         )
     )
     val receiver: Receiver,
+)
+
+@Entity(primaryKeys = [
+    "planId",
+    "giftId"
+])
+data class PlanGifts(
+    val planId: Long,
+    val giftId: Long,
+)
+
+data class PlanWithGifts(
+    @Embedded var plan: Plan,
 
     @Relation(parentColumn = "pId",
         entityColumn = "gId",
         entity = Gift::class,
         associateBy = Junction(
-            value = PlanReceiverGift::class,
+            value = PlanReceiver::class,
             parentColumn = "planId",
             entityColumn = "giftId"
         )
     )
-    val gifts: List<Gift>
+    val gifts: List<Gift>,
 )

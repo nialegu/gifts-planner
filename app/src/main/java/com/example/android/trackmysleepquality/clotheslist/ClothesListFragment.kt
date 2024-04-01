@@ -122,7 +122,7 @@ class ClothesListFragment : Fragment() {
         }
 
         viewModel.plans.observe(viewLifecycleOwner, Observer {plans ->
-            Log.i("asdasdasd", plans.toString())
+            Log.i("asdasdasd", plans.size.toString())
         })
 
         var clothesList: List<Clothes> = emptyList()

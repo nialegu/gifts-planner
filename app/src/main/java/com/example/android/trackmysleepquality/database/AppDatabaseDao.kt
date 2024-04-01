@@ -21,7 +21,6 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.TypeConverters
 import androidx.room.Update
 import com.example.android.trackmysleepquality.enums.Season
@@ -54,9 +53,8 @@ interface AppDatabaseDao {
             "AND (c.type == :type OR :type is null)")
     fun getClothesByFilters(season: Season?, type: Type?): List<Clothes>
 
-    @Transaction
     @Query("select * from `plan`")
-    fun getAllPlans(): LiveData<List<PlanWithReceiverAndGifts>>
+    fun getAllPlans(): LiveData<List<PlanWithReceiver>>
     @Insert
     fun insertPlan(plan: Plan): Long
     @Delete
@@ -83,5 +81,7 @@ interface AppDatabaseDao {
     fun updateGift(gift: Gift)
 
     @Insert
-    fun insertPlanReceiverGift(prg: PlanReceiverGift)
+    fun insertPlanReceiver(prg: PlanReceiver)
+    @Insert
+    fun insertPlanGift(prg: PlanGifts)
 }

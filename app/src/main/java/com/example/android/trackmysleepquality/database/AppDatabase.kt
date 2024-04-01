@@ -6,7 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Clothes::class, Plan::class, Gift::class, Receiver::class, PlanReceiverGift::class], version = 1, exportSchema = false)
+@Database(entities = [
+        Clothes::class,
+        Plan::class,
+        Gift::class,
+        Receiver::class,
+        PlanReceiver::class,
+        PlanGifts::class
+     ],
+    version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
