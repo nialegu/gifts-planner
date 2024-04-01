@@ -19,6 +19,7 @@ package com.example.android.trackmysleepquality.clotheslist
 import android.app.Application
 import android.icu.text.SimpleDateFormat
 import android.text.Spanned
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
@@ -55,16 +56,16 @@ class ClothesListViewModel(
         val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
 
         val plan: Plan = Plan(
-            pId = 1L,
+            1L,
             holiday = "Holiday",
             date = simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
         )
         val receiver: Receiver = Receiver(
-            rId = 2L,
+            2L,
             receiverName = "Leonid"
         )
         val gift: Gift = Gift(
-            gId = 3L,
+            3L,
             giftName = "gift",
             price = 200.0
         )
@@ -77,27 +78,37 @@ class ClothesListViewModel(
             insert(plan, receiver, gift, prg)
         }
     }
-    private suspend fun insert(plan: Plan, receiver: Receiver, gift: Gift, prg: PlanReceiverGift, ) {
+    private suspend fun insert(plan: Plan, receiver: Receiver, gift: Gift, planReceiverGift: PlanReceiverGift) {
         withContext(Dispatchers.IO) {
-            dao.insertPlanReceiverGift(prg)
-            dao.insertPlan(plan)
-            dao.insertReceiver(receiver)
-            dao.insertGift(gift)
+            val newPlanId = dao.insertPlan(plan)
+            val newReceiverId = dao.insertReceiver(receiver)
+            val newGiftId = dao.insertGift(gift)
+
+            val prg: PlanReceiverGift = PlanReceiverGift(
+                newPlanId,
+                newReceiverId,
+                newGiftId
+            )
+
+            insertRelations(prg)
         }
+    }
+    private fun insertRelations(prg: PlanReceiverGift){
+        dao.insertPlanReceiverGift(prg)
     }
 
     val foundedAfterDateFilter = MutableLiveData<List<Plan>>()
-    /*fun onDateFilter(date: LocalDateTime){
+    fun onDateFilter(date: Date){
         uiScope.launch {
             foundedAfterDateFilter.value = getByDate(date)
         }
     }
-    private suspend fun getByDate(date: LocalDateTime): List<Plan>{
+    private suspend fun getByDate(date: Date): List<Plan>{
         return withContext(Dispatchers.IO) {
             val foundedPlans = dao.getPlansByDate(date)
             foundedPlans
         }
-    }*/
+    }
 
     val resources = application.resources
 

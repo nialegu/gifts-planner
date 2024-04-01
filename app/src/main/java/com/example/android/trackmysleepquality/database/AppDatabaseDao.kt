@@ -58,7 +58,7 @@ interface AppDatabaseDao {
     @Query("select * from `plan`")
     fun getAllPlans(): LiveData<List<PlanWithReceiverAndGifts>>
     @Insert
-    fun insertPlan(plan: Plan)
+    fun insertPlan(plan: Plan): Long
     @Delete
     fun deletePlan(plan: Plan)
     @Update
@@ -69,14 +69,14 @@ interface AppDatabaseDao {
     @Query("select * from receiver")
     fun getAllReceivers(): LiveData<List<Receiver>>
     @Insert
-    fun insertReceiver(receiver: Receiver)
+    fun insertReceiver(receiver: Receiver): Long
     @Delete
     fun deleteReceiver(receiver: Receiver)
 
     @Query("select * from gift")
     fun getAllGifts(): LiveData<List<Gift>>
     @Insert
-    fun insertGift(gift: Gift)
+    fun insertGift(gift: Gift): Long
     @Delete
     fun deleteGift(gift: Gift)
     @Update
