@@ -16,6 +16,7 @@
 
 package com.example.android.trackmysleepquality.planslist
 
+import android.app.AlertDialog
 import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
@@ -27,6 +28,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -37,10 +39,10 @@ import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.AppDatabase
 import com.example.android.trackmysleepquality.database.Gift
 import com.example.android.trackmysleepquality.database.Plan
+import com.example.android.trackmysleepquality.database.PlanReceiverGifts
 import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.databinding.FragmentClothesListBinding
-import com.example.android.trackmysleepquality.enums.Season
-import com.example.android.trackmysleepquality.enums.Type
+import com.example.android.trackmysleepquality.receiverslist.ReceiverListAdapter
 import java.time.Instant
 import java.util.Date
 
@@ -49,7 +51,7 @@ import java.util.Date
  * a database. Cumulative data is displayed in a simple scrollable TextView.
  * (Because we have not learned about RecyclerView yet.)
  */
-class ClothesListFragment : Fragment() {
+class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
 
     private lateinit var viewModel: ClothesListViewModel
 
@@ -66,7 +68,8 @@ class ClothesListFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
                 .get(ClothesListViewModel::class.java)
 
-
+        val adapter = PlanListAdapter(this, application.resources)
+        binding.plansList.adapter = adapter
 
         binding.clearButton.setOnClickListener {
             viewModel.onClear()
@@ -102,7 +105,8 @@ class ClothesListFragment : Fragment() {
         }
 
         viewModel.plans.observe(viewLifecycleOwner, Observer { plans ->
-            Log.i("asdasdasd", plans.toString())
+            if (plans != null)
+                adapter.data = plans
         })
 
         viewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
@@ -112,7 +116,28 @@ class ClothesListFragment : Fragment() {
         return binding.root
     }
 
-    private fun getViews(clothes: List<Clothes>, binding: FragmentClothesListBinding, label: String){
+    override fun onItemClick(plan: PlanReceiverGifts, item: PlanListViewHolder) {
+        Toast.makeText(context, plan.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLongClick(plan: PlanReceiverGifts) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(R.string.delete)
+        builder.setMessage(R.string.deletePlanAlert)
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            viewModel.deletePlan(plan)
+        }
+        builder.setNegativeButton("No") { _, _ ->}
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(true)
+
+        alertDialog.show()
+    }
+
+    /*private fun getViews(clothes: List<Clothes>, binding: FragmentClothesListBinding, label: String){
         val resultList: MutableList<View> = mutableListOf()
         clothes.map {cl ->
             val linearLayout = LinearLayout(context)
@@ -137,7 +162,7 @@ class ClothesListFragment : Fragment() {
             deleteButton.setBackgroundColor(resources.getColor(R.color.red_color))
             buttonLinearLayout.addView(deleteButton)
             deleteButton.setOnClickListener {
-                viewModel.onDelete(cl.id)
+                //viewModel.onDelete(cl.id)
                 //binding.filterBar.isVisible = true
                 binding.dateField.text?.clear()
 
@@ -154,8 +179,8 @@ class ClothesListFragment : Fragment() {
         textView.text = label + "\n"
         //binding.clothesList.addView(textView)
 
-        /*resultList.map {
+        *//*resultList.map {
             binding.clothesList.addView(it)
-        }*/
-    }
+        }*//*
+    }*/
 }

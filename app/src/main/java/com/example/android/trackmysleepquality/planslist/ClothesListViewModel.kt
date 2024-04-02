@@ -27,6 +27,7 @@ import com.example.android.trackmysleepquality.database.Gift
 import com.example.android.trackmysleepquality.database.Plan
 import com.example.android.trackmysleepquality.database.PlanGifts
 import com.example.android.trackmysleepquality.database.PlanReceiver
+import com.example.android.trackmysleepquality.database.PlanReceiverGifts
 import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
@@ -130,14 +131,14 @@ class ClothesListViewModel(
         plans.isNotEmpty()
     }
 
-    fun onDelete(id: Long){
+    fun deletePlan(plan: PlanReceiverGifts){
         uiScope.launch {
-            deleteById(id)
+            delete(plan)
         }
     }
-    private suspend fun deleteById(id: Long){
+    private suspend fun delete(plan: PlanReceiverGifts){
         withContext(Dispatchers.IO){
-            dao.deleteClothesById(id)
+            dao.deletePlan(plan.plan)
         }
     }
 

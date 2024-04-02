@@ -17,41 +17,39 @@
             android:id="@+id/date_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/date_field_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
                 android:hint="@string/searchByDate"
+                android:padding="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/search_button"
-                app:placeholderText="@string/searchByDatePattern"
-                >
+                app:placeholderText="@string/searchByDatePattern">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/date_field"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
                     android:inputType="date"
-                    />
+                    android:minHeight="48dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/search_button"
                 style="@style/SleepButtons"
-                app:layout_constraintStart_toEndOf="@+id/search_field_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search">
+                android:text="@string/search"
+                app:layout_constraintStart_toEndOf="@+id/search_field_layout">
 
             </Button>
 
@@ -61,12 +59,13 @@
             android:id="@+id/plans_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin"
+            android:layout_marginTop="173dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/to_buttons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_bar"
-            android:layout_marginHorizontal="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layout_constraintTop_toBottomOf="@+id/date_bar" />
 
         <Button
             android:id="@+id/clear_button"
