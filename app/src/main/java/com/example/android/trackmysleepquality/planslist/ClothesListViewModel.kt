@@ -21,7 +21,6 @@ import android.text.Spanned
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.AppDatabaseDao
 import com.example.android.trackmysleepquality.database.Gift
 import com.example.android.trackmysleepquality.database.Plan

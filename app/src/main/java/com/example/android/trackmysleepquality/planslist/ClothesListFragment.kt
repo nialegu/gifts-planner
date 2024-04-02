@@ -35,7 +35,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
-import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.AppDatabase
 import com.example.android.trackmysleepquality.database.Gift
 import com.example.android.trackmysleepquality.database.Plan

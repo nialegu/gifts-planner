@@ -23,8 +23,6 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.TypeConverters
 import androidx.room.Update
-import com.example.android.trackmysleepquality.enums.Season
-import com.example.android.trackmysleepquality.enums.Type
 import java.time.LocalDate
 import java.util.Date
 

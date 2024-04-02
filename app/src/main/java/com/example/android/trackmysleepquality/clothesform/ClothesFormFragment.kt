@@ -15,12 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
-import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.AppDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentClothesFormBinding
-import com.example.android.trackmysleepquality.enums.ClothesSize
-import com.example.android.trackmysleepquality.enums.Season
-import com.example.android.trackmysleepquality.enums.Type
 
 class ClothesFormFragment : Fragment() {
 

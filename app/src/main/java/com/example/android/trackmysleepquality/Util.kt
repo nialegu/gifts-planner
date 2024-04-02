@@ -23,7 +23,6 @@ import android.text.Html
 import android.text.Spanned
 import androidx.annotation.RequiresApi
 import androidx.core.text.HtmlCompat
-import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.PlanReceiverGifts
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -78,32 +77,7 @@ fun convertLongToDateString(systemTime: Long): String {
  *           See: https://developer.android.com/reference/android/text/Spanned
  */
 
-fun formatClothesForOneItem(cl: Clothes, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply {
-        append(resources.getString(R.string.name))
-        append("\t${cl.name}<br>")
-        append(resources.getString(R.string.description))
-        append("\t${cl.description}<br>")
-        append(resources.getString(R.string.season))
-        append("\t${cl.season.toString()}<br>")
-        append(resources.getString(R.string.type))
-        append("\t${cl.type}<br>")
-        if (cl.clothesSize != null) {
-            append(resources.getString(R.string.size))
-            append("\t${cl.clothesSize}<br><br>")
-        }
-        else if (cl.shoesSize != null) {
-            append(resources.getString(R.string.size))
-            append("\t${cl.shoesSize}<br><br>")
-        }
-    }
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-    } else {
-        HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-    }
-}
+
 
 
 fun formatPlansForOneItem(plan: PlanReceiverGifts, resources: Resources): Spanned {
