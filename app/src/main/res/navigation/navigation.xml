@@ -25,9 +25,9 @@
 
     <fragment
         android:id="@+id/sleep_tracker_fragment"
-        android:name="com.example.android.trackmysleepquality.planslist.ClothesListFragment"
+        android:name="com.example.android.trackmysleepquality.planslist.PlanListFragment"
         android:label="@string/sleep_tracker_fragment"
-        tools:layout="@layout/fragment_clothes_list">
+        tools:layout="@layout/fragment_plan_list">
         <action
             android:id="@+id/action_sleep_tracker_fragment_to_clothes_form_fragment"
             app:destination="@id/clothes_form_fragment"
@@ -50,7 +50,7 @@
         android:id="@+id/clothes_form_fragment"
         android:name="com.example.android.trackmysleepquality.clothesform.ClothesFormFragment"
         android:label="@string/clothes_form_fragment"
-        tools:layout="@layout/fragment_clothes_form">
+        tools:layout="@layout/fragment_plan_form">
         <action
             android:id="@+id/action_clothesFormFragment_to_sleepTrackerFragment"
             app:destination="@id/sleep_tracker_fragment"

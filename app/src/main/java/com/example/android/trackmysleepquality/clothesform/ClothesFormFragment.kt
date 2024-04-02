@@ -6,9 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.RadioButton
-import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.AppDatabase
-import com.example.android.trackmysleepquality.databinding.FragmentClothesFormBinding
+import com.example.android.trackmysleepquality.databinding.FragmentPlanFormBinding
 
 class ClothesFormFragment : Fragment() {
 
@@ -28,8 +25,8 @@ class ClothesFormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding: FragmentClothesFormBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_clothes_form, container, false)//
+        val binding: FragmentPlanFormBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_plan_form, container, false)//
 
         val application = requireNotNull(this.activity).application
         val dao = AppDatabase.getInstance(application).getAppDatabaseDao()

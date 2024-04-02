@@ -17,24 +17,15 @@
 package com.example.android.trackmysleepquality.planslist
 
 import android.app.Application
-import android.text.Spanned
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.android.trackmysleepquality.database.AppDatabaseDao
-import com.example.android.trackmysleepquality.database.Gift
-import com.example.android.trackmysleepquality.database.Plan
-import com.example.android.trackmysleepquality.database.PlanGifts
-import com.example.android.trackmysleepquality.database.PlanReceiver
 import com.example.android.trackmysleepquality.database.PlanReceiverGifts
-import com.example.android.trackmysleepquality.database.Receiver
 import kotlinx.coroutines.*
 import java.util.Date
 
-/**
- * ViewModel for SleepTrackerFragment.
- */
-class ClothesListViewModel(
+class PlanListViewModel(
         private val dao: AppDatabaseDao,
         application: Application) : AndroidViewModel(application) {
 

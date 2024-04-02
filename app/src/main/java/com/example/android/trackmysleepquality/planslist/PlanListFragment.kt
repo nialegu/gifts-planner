@@ -17,17 +17,11 @@
 package com.example.android.trackmysleepquality.planslist
 
 import android.app.AlertDialog
-import android.content.Context
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -36,12 +30,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.AppDatabase
-import com.example.android.trackmysleepquality.database.Gift
-import com.example.android.trackmysleepquality.database.Plan
 import com.example.android.trackmysleepquality.database.PlanReceiverGifts
-import com.example.android.trackmysleepquality.database.Receiver
-import com.example.android.trackmysleepquality.databinding.FragmentClothesListBinding
-import com.example.android.trackmysleepquality.receiverslist.ReceiverListAdapter
+import com.example.android.trackmysleepquality.databinding.FragmentPlanListBinding
 import java.time.Instant
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -52,22 +42,22 @@ import java.util.Date
  * a database. Cumulative data is displayed in a simple scrollable TextView.
  * (Because we have not learned about RecyclerView yet.)
  */
-class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
+class PlanListFragment : Fragment(), PlanListAdapter.ItemClickListener {
 
-    private lateinit var viewModel: ClothesListViewModel
+    private lateinit var viewModel: PlanListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         // Get a reference to the binding object and inflate the fragment views.
-        val binding: FragmentClothesListBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_clothes_list, container, false)
+        val binding: FragmentPlanListBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_plan_list, container, false)
 
         val application = requireNotNull(this.activity).application
         val dao = AppDatabase.getInstance(application).getAppDatabaseDao()
-        val viewModelFactory = ClothesListViewModelFactory(dao, application)
+        val viewModelFactory = PlanListViewModelFactory(dao, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
-                .get(ClothesListViewModel::class.java)
+                .get(PlanListViewModel::class.java)
 
         val adapter = PlanListAdapter(this, application.resources)
         binding.plansList.adapter = adapter
@@ -94,7 +84,7 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
             )
             viewModel.insertNewPlan(plan, receiver, gift)*/
 
-            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
+            findNavController().navigate(PlanListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
 
             //binding.searchField.text?.clear()
             //this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
@@ -129,11 +119,11 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
         })
 
         binding.toReceiversButton.setOnClickListener {
-            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToReceiverListFragment())
+            findNavController().navigate(PlanListFragmentDirections.actionSleepTrackerFragmentToReceiverListFragment())
         }
 
         binding.toGiftsButton.setOnClickListener {
-            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToGiftsListFragment())
+            findNavController().navigate(PlanListFragmentDirections.actionSleepTrackerFragmentToGiftsListFragment())
         }
 
         viewModel.plans.observe(viewLifecycleOwner, Observer { plans ->
@@ -150,7 +140,7 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(plan: PlanReceiverGifts, item: PlanListViewHolder) {
-        findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(plan.plan.pId.toString()))
+        findNavController().navigate(PlanListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(plan.plan.pId.toString()))
     }
 
     override fun onLongClick(plan: PlanReceiverGifts) {
