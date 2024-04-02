@@ -93,5 +93,7 @@
     <string name="date">"Date: "</string>
     <string name="giftName">"Gift: "</string>
     <string name="price">"Price: "</string>
+    <string name="receiver_list_fragment">ReceiverListFragment</string>
+    <string name="deleteAlert">Do you really want to delete this receiver?</string>
 
 </resources>

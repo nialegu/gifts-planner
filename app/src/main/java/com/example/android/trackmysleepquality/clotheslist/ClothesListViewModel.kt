@@ -50,20 +50,7 @@ class ClothesListViewModel(
     val clothes = dao.getAllClothes()
     val plans = dao.getAllPlans()
 
-    fun insertNewPlan(){
-        val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
-
-        val plan: Plan = Plan(
-            holiday = "Holiday",
-            date = simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
-        )
-        val receiver: Receiver = Receiver(
-            receiverName = "Leonid"
-        )
-        val gift: Gift = Gift(
-            giftName = "gift",
-            price = 200.0
-        )
+    fun insertNewPlan(plan: Plan, receiver: Receiver, gift: Gift){
         uiScope.launch {
             insertPlanWithGift(insertPlan(plan, receiver), gift)
         }

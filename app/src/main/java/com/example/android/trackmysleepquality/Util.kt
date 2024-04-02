@@ -113,18 +113,18 @@ fun formatPlansForOneItem(plan: PlanWithReceiver, resources: Resources): Spanned
     val format = SimpleDateFormat("dd.MM.yyyy")
 
     val sb = StringBuilder()
-    sb.apply {
+    /*sb.apply {
         append(resources.getString(R.string.holiday))
-        append("\t${plan.plan.holiday}<br>")
+        append("\t${plan..holiday}<br>")
         append(resources.getString(R.string.date))
         append("\t${format.format(Date(plan.plan.date))}<br>")
         append(resources.getString(R.string.receiver))
         append("\t${plan.receiver.receiverName}<br>")
-        /*append(resources.getString(R.string.giftName))
+        *//*append(resources.getString(R.string.giftName))
         append("\t${plan.gifts[0].giftName}<br>")
         append(resources.getString(R.string.price))
-        append("\t${plan.gifts[0].price.toString()}<br>")*/
-    }
+        append("\t${plan.gifts[0].price.toString()}<br>")*//*
+    }*/
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
     } else {

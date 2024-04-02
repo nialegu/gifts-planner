@@ -17,6 +17,7 @@
 package com.example.android.trackmysleepquality.clotheslist
 
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -39,9 +40,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.AppDatabase
+import com.example.android.trackmysleepquality.database.Gift
+import com.example.android.trackmysleepquality.database.Plan
+import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.databinding.FragmentClothesListBinding
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
+import java.time.Instant
+import java.util.Date
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -116,13 +122,30 @@ class ClothesListFragment : Fragment() {
             viewModel.onClear()
         }
         binding.createButton.setOnClickListener {
-            viewModel.insertNewPlan()
+            /*val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
+            simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
+
+            val plan: Plan = Plan(
+                holiday = "Holiday",
+                date = simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
+            )
+            val receiver: Receiver = Receiver(
+                receiverName = "Leonid"
+            )
+            val gift: Gift = Gift(
+                giftName = "gift",
+                price = 200.0
+            )
+            viewModel.insertNewPlan(plan, receiver, gift)*/
+
+            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToReceiverListFragment())
+
             //binding.searchField.text?.clear()
             //this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
         }
 
         viewModel.plans.observe(viewLifecycleOwner, Observer {plans ->
-            Log.i("asdasdasd", plans.size.toString())
+            Log.i("asdasdasd", plans.toString())
         })
 
         var clothesList: List<Clothes> = emptyList()
