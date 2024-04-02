@@ -122,7 +122,7 @@ class ClothesListFragment : Fragment() {
             viewModel.onClear()
         }
         binding.createButton.setOnClickListener {
-            /*val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
+            val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
             simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
 
             val plan: Plan = Plan(
@@ -136,12 +136,19 @@ class ClothesListFragment : Fragment() {
                 giftName = "gift",
                 price = 200.0
             )
-            viewModel.insertNewPlan(plan, receiver, gift)*/
+            viewModel.insertNewPlan(plan, receiver, gift)
 
-            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToReceiverListFragment())
 
             //binding.searchField.text?.clear()
             //this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
+        }
+
+        binding.toReceiversButton.setOnClickListener {
+            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToReceiverListFragment())
+        }
+
+        binding.toGiftsButton.setOnClickListener {
+            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToGiftsListFragment())
         }
 
         viewModel.plans.observe(viewLifecycleOwner, Observer {plans ->

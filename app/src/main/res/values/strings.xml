@@ -17,7 +17,7 @@
 <resources>
 
     <!-- App title and fragment titles -->
-    <string name="app_name">My wardrobe</string>
+    <string name="app_name">Gift Planner</string>
     <string name="sleep_tracker_fragment">SleepTrackerFragment</string>
     <string name="sleep_quality_fragment">SleepQualityFragment</string>
 
@@ -95,5 +95,12 @@
     <string name="price">"Price: "</string>
     <string name="receiver_list_fragment">ReceiverListFragment</string>
     <string name="deleteAlert">Do you really want to delete this receiver?</string>
+    <string name="toReceivers">To Receivers</string>
+    <string name="toGifts">To Gifts</string>
+    <string name="gift">Gift</string>
+    <string name="enter_a_gift">Enter a gift</string>
+    <string name="gift_list_fragment">GiftListFragment</string>
+    <string name="enter_a_price">Enter a price</string>
+    <string name="deleteGiftAlert">Do you really want to delete this gift?</string>
 
 </resources>

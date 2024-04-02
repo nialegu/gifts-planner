@@ -3,15 +3,12 @@ package com.example.android.trackmysleepquality.receiverslist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.Receiver
 
-
-class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
 class ReceiveListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val image: ImageView = itemView.findViewById(R.id.image)
     val nameText: TextView = itemView.findViewById(R.id.receiver_name_text)

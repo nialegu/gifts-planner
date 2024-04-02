@@ -18,7 +18,7 @@ import com.example.android.trackmysleepquality.database.AppDatabase
 import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.databinding.FragmentReceiverListBinding
 
-class ReceiverListFragment : Fragment(), ReceiverListAdapter.ItemClickListener{
+class ReceiverListFragment : Fragment(), ReceiverListAdapter.ItemClickListener {
 
     private lateinit var viewModel: ReceiverListViewModel
 
