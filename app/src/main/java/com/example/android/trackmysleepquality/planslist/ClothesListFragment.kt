@@ -44,6 +44,8 @@ import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.databinding.FragmentClothesListBinding
 import com.example.android.trackmysleepquality.receiverslist.ReceiverListAdapter
 import java.time.Instant
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 /**
@@ -71,6 +73,8 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
         val adapter = PlanListAdapter(this, application.resources)
         binding.plansList.adapter = adapter
 
+        var plansList = mutableListOf<PlanReceiverGifts>()
+
         binding.clearButton.setOnClickListener {
             viewModel.onClear()
         }
@@ -96,6 +100,29 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
             //this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
         }
 
+        binding.searchButton.setOnClickListener {
+            if (binding.dateField.text.toString() == "") {
+                if (plansList != null)
+                    adapter.data = plansList
+            }
+            else {
+                val format = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                val localDate = LocalDate.parse(binding.dateField.text.toString(), format)
+
+                val formatToDate = DateTimeFormatter.ISO_INSTANT
+                val date = Date.from(Instant.parse(localDate.format(formatToDate)))
+
+                Log.i("asdsadsad", date.toString())
+
+                viewModel.onDateFilter(date)
+            }
+        }
+
+        viewModel.foundedAfterDateFilter.observe(viewLifecycleOwner, Observer { plans ->
+            if (plans != null)
+                adapter.data = plans
+        })
+
         binding.toReceiversButton.setOnClickListener {
             findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToReceiverListFragment())
         }
@@ -107,6 +134,7 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
         viewModel.plans.observe(viewLifecycleOwner, Observer { plans ->
             if (plans != null)
                 adapter.data = plans
+            plansList = plans.toMutableList()
         })
 
         viewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer { visible ->

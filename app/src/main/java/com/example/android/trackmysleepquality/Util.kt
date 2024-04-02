@@ -25,10 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.text.HtmlCompat
 import com.example.android.trackmysleepquality.database.Clothes
 import com.example.android.trackmysleepquality.database.PlanReceiverGifts
-import com.example.android.trackmysleepquality.database.PlanWithReceiver
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.Date
 
 /**
@@ -63,7 +60,7 @@ fun convertNumericQualityToString(quality: Int, resources: Resources): String {
  */
 @SuppressLint("SimpleDateFormat")
 fun convertLongToDateString(systemTime: Long): String {
-    return SimpleDateFormat("EEEE MMM-dd-yyyy' Time: 'HH:mm")
+    return SimpleDateFormat("dd.MM.yyyy")
             .format(systemTime).toString()
 }
 
@@ -117,7 +114,7 @@ fun formatPlansForOneItem(plan: PlanReceiverGifts, resources: Resources): Spanne
         append(resources.getString(R.string.holiday))
         append("\t${plan.plan.holiday}<br>")
         append(resources.getString(R.string.date))
-        append("\t${format.format(Date(plan.plan.date))}<br>")
+        append("\t${convertLongToDateString(plan.plan.date)}<br>")
         append(resources.getString(R.string.receiver))
         append("\t${plan.receiver.receiverName}<br>")
 

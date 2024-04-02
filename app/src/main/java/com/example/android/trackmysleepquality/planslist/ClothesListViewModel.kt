@@ -29,9 +29,6 @@ import com.example.android.trackmysleepquality.database.PlanGifts
 import com.example.android.trackmysleepquality.database.PlanReceiver
 import com.example.android.trackmysleepquality.database.PlanReceiverGifts
 import com.example.android.trackmysleepquality.database.Receiver
-import com.example.android.trackmysleepquality.enums.Season
-import com.example.android.trackmysleepquality.enums.Type
-import com.example.android.trackmysleepquality.formatClothesForOneItem
 import kotlinx.coroutines.*
 import java.util.Date
 
@@ -79,53 +76,18 @@ class ClothesListViewModel(
         }
     }
 
-    val foundedAfterDateFilter = MutableLiveData<List<Plan>>()
+    val foundedAfterDateFilter = MutableLiveData<List<PlanReceiverGifts>>()
     fun onDateFilter(date: Date){
         uiScope.launch {
             foundedAfterDateFilter.value = getByDate(date)
         }
     }
-    private suspend fun getByDate(date: Date): List<Plan>{
+    private suspend fun getByDate(date: Date): List<PlanReceiverGifts>{
         return withContext(Dispatchers.IO) {
             val foundedPlans = dao.getPlansByDate(date)
             foundedPlans
         }
     }
-
-    val resources = application.resources
-
-    val foundedAfterSearchClothes = MutableLiveData<List<Clothes>>()
-    fun onSearch(text: String){
-        uiScope.launch {
-            foundedAfterSearchClothes.value = searchFromDb(text)
-        }
-    }
-    private suspend fun searchFromDb(text: String): List<Clothes>{
-        return withContext(Dispatchers.IO) {
-            val foundedClothes = dao.getClothesByName(text)
-            foundedClothes
-        }
-    }
-
-    val foundedAfterFilterClothes = MutableLiveData<List<Clothes>>()
-    fun onFilter(season: Season?, type: Type?){
-        uiScope.launch {
-            foundedAfterFilterClothes.value = filterFromDb(season, type)
-        }
-    }
-    private suspend fun filterFromDb(season: Season?, type: Type?): List<Clothes>{
-        return withContext(Dispatchers.IO) {
-            val foundedClothes = dao.getClothesByFilters(season, type)
-            foundedClothes
-        }
-    }
-
-    fun getClothesStringsForOneItem(cl: Clothes): Spanned{
-        return formatClothesForOneItem(cl, resources)
-    }
-    /*fun getPlansStringForOneItem(plan: PlanWithReceiver): Spanned{
-        return formatPlansForOneItem(plan, resources)
-    }*/
 
     val clearButtonVisible = plans.map { plans ->
         plans.isNotEmpty()

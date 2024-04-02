@@ -102,7 +102,7 @@
     <string name="gift_list_fragment">GiftListFragment</string>
     <string name="enter_a_price">Enter a price</string>
     <string name="deleteGiftAlert">Do you really want to delete this gift?</string>
-    <string name="searchByDatePattern">dd/mm/yyyy</string>
+    <string name="searchByDatePattern">dd.mm.yyyy</string>
     <string name="searchByDate">Search by date</string>
     <string name="gifts">"GIFTS: "</string>
     <string name="deletePlanAlert">Do you really want to delete this plan?</string>

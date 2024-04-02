@@ -25,6 +25,7 @@ import androidx.room.TypeConverters
 import androidx.room.Update
 import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
+import java.time.LocalDate
 import java.util.Date
 
 @Dao
@@ -66,7 +67,7 @@ interface AppDatabaseDao {
     @Update
     fun updatePlan(plan: Plan)
     @Query("select * from `plan` where date == :date")
-    fun getPlansByDate(@TypeConverters(DateConverter::class) date: Date): List<Plan>
+    fun getPlansByDate(@TypeConverters(DateConverter::class) date: Date): List<PlanReceiverGifts>
     @Query("delete from `plan`")
     fun clearPlans()
 
