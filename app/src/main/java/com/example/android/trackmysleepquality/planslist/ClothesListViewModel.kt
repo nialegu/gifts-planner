@@ -43,7 +43,7 @@ class ClothesListViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
-    val clothes = dao.getAllClothes()
+    //val clothes = dao.getAllClothes()
     val plans = dao.getAllPlans()
 
     val foundedAfterDateFilter = MutableLiveData<List<PlanReceiverGifts>>()

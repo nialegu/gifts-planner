@@ -30,30 +30,6 @@ import java.util.Date
 
 @Dao
 interface AppDatabaseDao {
-    @Insert
-    fun insertClothes(clothes: Clothes)
-    @Update
-    fun updateClothes(clothes: Clothes)
-    @Query("SELECT * FROM clothes WHERE id = :key")
-    fun getSingleClothes(key: Long): Clothes?
-    @Query("DELETE FROM clothes")
-    fun clearClothes()
-    @Query("DELETE FROM clothes WHERE id = :id")
-    fun deleteClothesById(id: Long)
-    @Query("SELECT * FROM clothes ORDER BY id DESC")
-    fun getAllClothes(): LiveData<List<Clothes>>
-    @Query("SELECT * FROM clothes ORDER BY id DESC")
-    fun getAllClothesFuture(): List<Clothes>
-    @Query("SELECT * FROM clothes c " +
-            "WHERE c.name LIKE :pattern " +
-            "OR c.description LIKE :pattern " +
-            "ORDER BY id DESC")
-    fun getClothesByName(pattern: String): List<Clothes>
-    @Query("SELECT * FROM clothes c " +
-            "WHERE (c.season == :season OR :season is null) " +
-            "AND (c.type == :type OR :type is null)")
-    fun getClothesByFilters(season: Season?, type: Type?): List<Clothes>
-
     @Query("select * from `plan`")
     fun getAllPlansWithReceivers(): LiveData<List<PlanWithReceiver>>
     @Query("select * from `plan` where pId == :id")

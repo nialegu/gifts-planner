@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(entities = [
-        Clothes::class,
         Plan::class,
         Gift::class,
         Receiver::class,
