@@ -100,6 +100,8 @@ class ClothesListViewModel(
     }
     private suspend fun delete(plan: PlanReceiverGifts){
         withContext(Dispatchers.IO){
+            //dao.deleteRelationsPlanReceiver(plan.plan.pId)
+            //dao.deleteRelationsPlanGifts(plan.plan.pId)
             dao.deletePlan(plan.plan)
         }
     }

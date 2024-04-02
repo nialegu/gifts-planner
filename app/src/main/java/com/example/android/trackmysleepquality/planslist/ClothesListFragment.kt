@@ -106,15 +106,20 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
                     adapter.data = plansList
             }
             else {
-                val format = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                val localDate = LocalDate.parse(binding.dateField.text.toString(), format)
+                try {
+                    val format = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                    val localDate = LocalDate.parse(binding.dateField.text.toString(), format)
 
-                val formatToDate = DateTimeFormatter.ISO_INSTANT
-                val date = Date.from(Instant.parse(localDate.format(formatToDate)))
+                    val formatToDate = DateTimeFormatter.ISO_INSTANT
+                    val date = Date.from(Instant.parse(localDate.format(formatToDate)))
 
-                Log.i("asdsadsad", date.toString())
+                    Log.i("asdsadsad", date.toString())
 
-                viewModel.onDateFilter(date)
+                    viewModel.onDateFilter(date)
+                }
+                catch (e: Error){
+                    Toast.makeText(context, R.string.incorrectDateFormat, Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -145,7 +150,7 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(plan: PlanReceiverGifts, item: PlanListViewHolder) {
-        Toast.makeText(context, plan.toString(), Toast.LENGTH_SHORT).show()
+        findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
     }
 
     override fun onLongClick(plan: PlanReceiverGifts) {

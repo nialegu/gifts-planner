@@ -91,4 +91,9 @@ interface AppDatabaseDao {
     fun insertPlanReceiver(prg: PlanReceiver)
     @Insert
     fun insertPlanGift(prg: PlanGifts)
+
+    /*@Query("delete from planreceiver where planId == :id")
+    fun deleteRelationsPlanReceiver(id: Long)
+    @Query("delete from plangifts where planId == :id")
+    fun deleteRelationsPlanGifts(id: Long)*/
 }

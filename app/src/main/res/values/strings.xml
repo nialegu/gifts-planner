@@ -106,5 +106,6 @@
     <string name="searchByDate">Search by date</string>
     <string name="gifts">"GIFTS: "</string>
     <string name="deletePlanAlert">Do you really want to delete this plan?</string>
+    <string name="incorrectDateFormat">Incorrect Date format</string>
 
 </resources>
