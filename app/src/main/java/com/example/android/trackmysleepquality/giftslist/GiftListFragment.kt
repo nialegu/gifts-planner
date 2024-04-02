@@ -2,10 +2,12 @@ package com.example.android.trackmysleepquality.giftslist
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +20,7 @@ import com.example.android.trackmysleepquality.databinding.FragmentGiftsListBind
 class GiftListFragment : Fragment(), GiftListAdapter.ItemClickListener {
 
     private lateinit var viewModel: GiftListViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -56,8 +59,31 @@ class GiftListFragment : Fragment(), GiftListAdapter.ItemClickListener {
         return binding.root
     }
 
-    override fun onItemClick(gift: Gift) {
-        Toast.makeText(context, gift.toString(), Toast.LENGTH_SHORT).show()
+    override fun onItemClick(gift: Gift, item: GiftListViewHolder) {
+        item.nameText.isVisible = false
+        item.priceText.isVisible = false
+
+        item.nameField.isVisible = true
+        item.priceField.isVisible = true
+        item.updateButton.isVisible = true
+
+        item.updateButton.setOnClickListener {
+            val nameToUpdate = item.nameField.editText?.text.toString()
+            val priceToUpdate: Double
+
+            if (item.priceField.editText?.text.toString() != ""){
+                priceToUpdate = item.priceField.editText?.text.toString().toDouble()
+                viewModel.updateGift(gift.copy(giftName = nameToUpdate, price = priceToUpdate))
+
+                item.nameText.isVisible = true
+                item.priceText.isVisible = true
+
+                item.nameField.isVisible = false
+                item.priceField.isVisible = false
+                item.updateButton.isVisible = false
+            }
+
+        }
     }
 
     override fun onLongClick(gift: Gift) {

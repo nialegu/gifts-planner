@@ -33,6 +33,17 @@ class GiftListViewModel(
         }
     }
 
+    fun updateGift(gift: Gift){
+        uiScope.launch {
+            update(gift)
+        }
+    }
+    private suspend fun update(gift: Gift){
+        withContext(Dispatchers.IO){
+            dao.updateGift(gift)
+        }
+    }
+
     fun deleteGift(gift: Gift){
         uiScope.launch {
             delete(gift)
