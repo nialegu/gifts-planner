@@ -1,4 +1,4 @@
-package com.example.android.trackmysleepquality.clothesform
+package com.example.android.trackmysleepquality.planform
 
 import android.os.Bundle
 import android.util.Log
@@ -15,9 +15,9 @@ import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.AppDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentPlanFormBinding
 
-class ClothesFormFragment : Fragment() {
+class PlanFormFragment : Fragment() {
 
-    private lateinit var viewModel: ClothesFormViewModel
+    private lateinit var viewModel: PlanFormViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,9 +30,9 @@ class ClothesFormFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dao = AppDatabase.getInstance(application).getAppDatabaseDao()
-        val viewModelFactory = ClothesFormViewModelFactory(dao, application)
+        val viewModelFactory = PlanFormViewModelFactory(dao, application)
         viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(ClothesFormViewModel::class.java)
+            .get(PlanFormViewModel::class.java)
 
         val planId = arguments?.get("planId").toString().toLongOrNull()
         if (planId != null) {

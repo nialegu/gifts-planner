@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/clothes_form_fragment"
-        android:name="com.example.android.trackmysleepquality.clothesform.ClothesFormFragment"
+        android:name="com.example.android.trackmysleepquality.planform.PlanFormFragment"
         android:label="@string/clothes_form_fragment"
         tools:layout="@layout/fragment_plan_form">
         <action

@@ -1,7 +1,6 @@
-package com.example.android.trackmysleepquality.clothesform
+package com.example.android.trackmysleepquality.planform
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.android.trackmysleepquality.database.AppDatabaseDao
@@ -17,7 +16,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ClothesFormViewModel(
+class PlanFormViewModel(
     private val dao: AppDatabaseDao,
     application: Application) : AndroidViewModel(application) {
 
