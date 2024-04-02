@@ -39,5 +39,65 @@
         app:layout_constraintStart_toStartOf="@+id/gift_name"
         app:layout_constraintTop_toBottomOf="@+id/gift_name"/>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/update_name_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="18sp"
+        android:hint="@string/gift"
+        app:placeholderText="@string/enter_a_gift"
+        app:layout_constraintEnd_toStartOf="@id/update_button"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/update_price_layout"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/update_name"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:minHeight="48dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/update_price_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="18sp"
+        android:hint="@string/price"
+        app:placeholderText="@string/enter_a_price"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/update_button"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toBottomOf="@id/update_name_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/update_price"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:minHeight="48dp"
+            android:inputType="numberDecimal"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/update_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update"
+        app:layout_constraintStart_toEndOf="@+id/update_name_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
