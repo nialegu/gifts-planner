@@ -56,6 +56,8 @@ interface AppDatabaseDao {
 
     @Query("select * from `plan`")
     fun getAllPlansWithReceivers(): LiveData<List<PlanWithReceiver>>
+    @Query("select * from `plan` where pId == :id")
+    fun getPlanById(id: Long) : PlanReceiverGifts? ///////////////////
     @Query("select * from `plan`")
     fun getAllPlansWithGifts(): LiveData<List<PlanWithGifts>>
     @Query("select * from `plan`")
@@ -88,9 +90,14 @@ interface AppDatabaseDao {
     fun updateGift(gift: Gift)
 
     @Insert
-    fun insertPlanReceiver(prg: PlanReceiver)
+    fun insertPlanReceiver(pr: PlanReceiver)
     @Insert
-    fun insertPlanGift(prg: PlanGifts)
+    fun insertPlanGift(pg: PlanGifts)
+
+    @Update
+    fun updatePlanReceiver(pr: PlanReceiver)
+    @Update
+    fun updatePlanGifts(pr: PlanGifts)
 
     /*@Query("delete from planreceiver where planId == :id")
     fun deleteRelationsPlanReceiver(id: Long)

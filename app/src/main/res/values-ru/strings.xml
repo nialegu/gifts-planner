@@ -1,32 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2018, The Android Open Source Project
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
+<?xml version="1.0" encoding="utf-8"?>
 
 <resources>
 
-    <!-- App title and fragment titles -->
-    <string name="app_name">Gift Planner</string>
+    <string name="app_name">Планировщик подарков</string>
     <string name="sleep_tracker_fragment">SleepTrackerFragment</string>
     <string name="sleep_quality_fragment">SleepQualityFragment</string>
 
-    <!-- Button labels -->
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="clear">Clear</string>
 
-    <!-- contentDescription strings for quality icons -->
     <string name="quality_0">Sleep Quality 0</string>
     <string name="quality_1">Sleep Quality 1</string>
     <string name="quality_2">Sleep Quality 2</string>
@@ -34,7 +17,6 @@
     <string name="quality_4">Sleep Quality 4</string>
     <string name="quality_5">Sleep Quality 5</string>
 
-    <!-- Output to TextView styled with a little HTML -->
     <string name="title"><![CDATA[<h3>HERE IS YOUR SLEEP DATA</h3>]]></string>
     <string name="start_time"><![CDATA[<b>Start:</b>]]></string>
     <string name="end_time"><![CDATA[<b>End:</b>]]></string>
@@ -107,15 +89,5 @@
     <string name="gifts">"GIFTS: "</string>
     <string name="deletePlanAlert">Do you really want to delete this plan?</string>
     <string name="incorrectDateFormat">Incorrect Date format</string>
-    <string name="nameOfHoliday">Holiday name</string>
-
-    <string-array name="Languages">
-        <item>Java</item>
-        <item>Kotlin</item>
-        <item>Swift</item>
-        <item>Python</item>
-        <item>Scala</item>
-        <item>Perl</item>
-    </string-array>
 
 </resources>

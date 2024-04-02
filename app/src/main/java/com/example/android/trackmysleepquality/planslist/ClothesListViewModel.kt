@@ -46,36 +46,6 @@ class ClothesListViewModel(
     val clothes = dao.getAllClothes()
     val plans = dao.getAllPlans()
 
-    fun insertNewPlan(plan: Plan, receiver: Receiver, gift: Gift){
-        uiScope.launch {
-            insertPlanWithGift(insertPlan(plan, receiver), gift)
-        }
-    }
-    private suspend fun insertPlan(plan: Plan, receiver: Receiver): Long {
-        return withContext(Dispatchers.IO) {
-            val newPlanId = dao.insertPlan(plan)
-            val newReceiverId = dao.insertReceiver(receiver)
-
-            val pr = PlanReceiver(
-                newPlanId,
-                newReceiverId,
-            )
-            dao.insertPlanReceiver(pr)
-            newPlanId
-        }
-    }
-
-    private suspend fun insertPlanWithGift(planId: Long, gift: Gift){
-        withContext(Dispatchers.IO) {
-            val newGiftId = dao.insertGift(gift)
-            val pg = PlanGifts(
-                planId,
-                newGiftId,
-            )
-            dao.insertPlanGift(pg)
-        }
-    }
-
     val foundedAfterDateFilter = MutableLiveData<List<PlanReceiverGifts>>()
     fun onDateFilter(date: Date){
         uiScope.launch {

@@ -1,9 +1,11 @@
 package com.example.android.trackmysleepquality.clothesform
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -39,55 +41,27 @@ class ClothesFormFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ClothesFormViewModel::class.java)
 
-        val clothesId = arguments?.get("clothesId").toString().toLongOrNull()
-        if (clothesId != null) {
-            viewModel.getClothesById(clothesId)
+        val planId = arguments?.get("planId").toString().toLongOrNull()
+        if (planId != null) {
+            viewModel.getPlanById(planId)
         }
 
-        val clothesSizeRadioButtons: MutableList<RadioButton> = emptyList<RadioButton>().toMutableList()
-        ClothesSize.entries.map {
-            val rb = RadioButton(context)
-            rb.text = it.toString()
-            clothesSizeRadioButtons += rb
-        }
-        clothesSizeRadioButtons.map {
-            binding.clothesSize.addView(it)
-        }
+        val listForSpinner = mutableListOf<String>()
+        viewModel.receivers.observe(viewLifecycleOwner, Observer {receivers ->
+            receivers.map {
+                listForSpinner.plusAssign(it.receiverName)
+            }
+            Log.i("asdsadasd", listForSpinner.size.toString())
+            val arrayAdapter = ArrayAdapter(this.requireContext(),
+                android.R.layout.simple_spinner_item, listForSpinner)
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.receiveSpinner.setAdapter(arrayAdapter)
+        })
 
-        val seasonRadioButtons: MutableList<RadioButton> = emptyList<RadioButton>().toMutableList()
-        Season.entries.map {
-            val rb = RadioButton(context)
-            rb.text = it.toString()
-            seasonRadioButtons.plusAssign(rb)
-        }
-        seasonRadioButtons.map {
-            binding.season.addView(it)
-        }
-
-        val typeRadioButtons: MutableList<RadioButton> = emptyList<RadioButton>().toMutableList()
-        Type.entries.map {
-            val rb = RadioButton(context)
-            rb.text = it.toString()
-            typeRadioButtons.plusAssign(rb)
-        }
-        typeRadioButtons.map {
-            binding.type.addView(it)
-        }
-
-        var name: String
-        var season: Season = Season.summer
-        var type: Type = Type.top
-        var description: String
-        var clothesSize: ClothesSize? = null
-        var shoesSize: Int? = null
-
-        binding.clothesSize.setOnCheckedChangeListener { group, id ->
-            val radio: RadioButton = group.findViewById(id)
-            clothesSize = ClothesSize.valueOf(radio.text.toString())
-        }
 
         binding.addButton.setOnClickListener {
-            name = binding.nameField.editText?.text.toString()
+            binding.receiveSpinner.selectedItem
+            /*name = binding.nameField.editText?.text.toString()
             description = binding.descriptionField.editText?.text.toString()
             if (binding.shoesSizeField.editText?.text.toString() != "") shoesSize = Integer.parseInt(binding.shoesSizeField.editText?.text.toString())
             val newClothes: Clothes = Clothes(
@@ -98,40 +72,12 @@ class ClothesFormFragment : Fragment() {
                 clothesSize = clothesSize,
                 shoesSize = shoesSize
             )
-            viewModel.insertNewClothes(newClothes)
+            viewModel.insertNewClothes(newClothes)*/
             this.findNavController().navigate(R.id.action_clothesFormFragment_to_sleepTrackerFragment)
         }
 
-        binding.season.setOnCheckedChangeListener { group, checkedId ->
-            val radio: RadioButton = group.findViewById(checkedId)
-            season = Season.valueOf(radio.text.toString())
-        }
-
-        binding.type.setOnCheckedChangeListener { group, checkedId ->
-            val radio: RadioButton = group.findViewById(checkedId)
-            type = Type.valueOf(radio.text.toString())
-            when (type) {
-                Type.top, Type.bottom -> {
-                    clothesSize = null
-                    binding.clothesSize.isVisible = true
-                    binding.shoesSizeField.isVisible = false
-                }
-                Type.shoes -> {
-                    shoesSize = null
-                    binding.clothesSize.isVisible = false
-                    binding.shoesSizeField.isVisible = true
-                }
-                else -> {
-                    shoesSize = null
-                    clothesSize = null
-                    binding.clothesSize.isVisible = false
-                    binding.shoesSizeField.isVisible = false
-                }
-            }
-        }
-
-        viewModel.currentClothesItem.observe(viewLifecycleOwner, Observer {cl ->
-            binding.nameField.editText?.setText(cl?.name, TextView.BufferType.EDITABLE)
+        viewModel.currentPlan.observe(viewLifecycleOwner, Observer {pl ->
+            /*binding.nameField.editText?.setText(cl?.name, TextView.BufferType.EDITABLE)
             binding.descriptionField.editText?.setText(cl?.description, TextView.BufferType.EDITABLE)
 
             val seasonShouldCheck = seasonRadioButtons.filter {
@@ -171,9 +117,9 @@ class ClothesFormFragment : Fragment() {
                 cl?.shoesSize = shoesSize
                 if (cl != null) {
                     viewModel.updateCurrentClothes(cl)
-                }
+                }*//*
                 this.findNavController().navigate(R.id.action_clothesFormFragment_to_sleepTrackerFragment)
-            }
+            }*/
         })
 
         return binding.root

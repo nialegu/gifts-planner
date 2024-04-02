@@ -79,7 +79,7 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
             viewModel.onClear()
         }
         binding.createButton.setOnClickListener {
-            val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
+            /*val simpleDateFormat = SimpleDateFormat("ddMMyyyy")
             simpleDateFormat.format(Date.from(Instant.now())).toString().toLong()
 
             val plan: Plan = Plan(
@@ -93,8 +93,9 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
                 giftName = "gift",
                 price = 200.0
             )
-            viewModel.insertNewPlan(plan, receiver, gift)
+            viewModel.insertNewPlan(plan, receiver, gift)*/
 
+            findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
 
             //binding.searchField.text?.clear()
             //this.findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
@@ -150,7 +151,7 @@ class ClothesListFragment : Fragment(), PlanListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(plan: PlanReceiverGifts, item: PlanListViewHolder) {
-        findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(""))
+        findNavController().navigate(ClothesListFragmentDirections.actionSleepTrackerFragmentToClothesFormFragment(plan.plan.pId.toString()))
     }
 
     override fun onLongClick(plan: PlanReceiverGifts) {
