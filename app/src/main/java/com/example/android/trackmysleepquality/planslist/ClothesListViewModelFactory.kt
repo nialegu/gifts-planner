@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.trackmysleepquality.clotheslist
+package com.example.android.trackmysleepquality.planslist
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

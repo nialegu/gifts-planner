@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.example.android.trackmysleepquality.clotheslist
+package com.example.android.trackmysleepquality.planslist
 
 import android.app.Application
-import android.icu.text.SimpleDateFormat
 import android.text.Spanned
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -33,7 +32,6 @@ import com.example.android.trackmysleepquality.enums.Season
 import com.example.android.trackmysleepquality.enums.Type
 import com.example.android.trackmysleepquality.formatClothesForOneItem
 import kotlinx.coroutines.*
-import java.time.Instant
 import java.util.Date
 
 /**
@@ -124,12 +122,12 @@ class ClothesListViewModel(
     fun getClothesStringsForOneItem(cl: Clothes): Spanned{
         return formatClothesForOneItem(cl, resources)
     }
-   /* fun getPlansStringForOneItem(plan: PlanWithReceiver): Spanned{
+    /*fun getPlansStringForOneItem(plan: PlanWithReceiver): Spanned{
         return formatPlansForOneItem(plan, resources)
     }*/
 
-    val clearButtonVisible = clothes.map { clothes ->
-        clothes.isNotEmpty()
+    val clearButtonVisible = plans.map { plans ->
+        plans.isNotEmpty()
     }
 
     fun onDelete(id: Long){
@@ -150,7 +148,7 @@ class ClothesListViewModel(
     }
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
-            dao.clearClothes()
+            dao.clearPlans()
         }
     }
 

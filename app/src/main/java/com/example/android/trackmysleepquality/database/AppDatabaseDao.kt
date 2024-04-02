@@ -54,7 +54,11 @@ interface AppDatabaseDao {
     fun getClothesByFilters(season: Season?, type: Type?): List<Clothes>
 
     @Query("select * from `plan`")
-    fun getAllPlans(): LiveData<List<PlanWithReceiver>>
+    fun getAllPlansWithReceivers(): LiveData<List<PlanWithReceiver>>
+    @Query("select * from `plan`")
+    fun getAllPlansWithGifts(): LiveData<List<PlanWithGifts>>
+    @Query("select * from `plan`")
+    fun getAllPlans(): LiveData<List<PlanReceiverGifts>>
     @Insert
     fun insertPlan(plan: Plan): Long
     @Delete
@@ -63,6 +67,8 @@ interface AppDatabaseDao {
     fun updatePlan(plan: Plan)
     @Query("select * from `plan` where date == :date")
     fun getPlansByDate(@TypeConverters(DateConverter::class) date: Date): List<Plan>
+    @Query("delete from `plan`")
+    fun clearPlans()
 
     @Query("select * from receiver")
     fun getAllReceivers(): LiveData<List<Receiver>>
