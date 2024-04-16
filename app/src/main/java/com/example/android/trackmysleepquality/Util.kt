@@ -91,9 +91,8 @@ fun formatPlansForOneItem(plan: PlanReceiverGifts, resources: Resources): Spanne
         append("\t${convertLongToDateString(plan.plan.date)}<br>")
         append(resources.getString(R.string.receiver))
         append("\t${plan.receiver.receiverName}<br>")
-
+        append(resources.getString(R.string.gifts) + "<br>")
         plan.gifts.map {
-            append(resources.getString(R.string.gifts) + "<br>")
             append(resources.getString(R.string.giftName))
             append("\t${plan.gifts[0].giftName}<br>")
             append(resources.getString(R.string.price))

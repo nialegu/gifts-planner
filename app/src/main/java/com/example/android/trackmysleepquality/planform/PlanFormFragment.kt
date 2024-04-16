@@ -13,7 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.AppDatabase
+import com.example.android.trackmysleepquality.database.Gift
+import com.example.android.trackmysleepquality.database.Plan
+import com.example.android.trackmysleepquality.database.Receiver
 import com.example.android.trackmysleepquality.databinding.FragmentPlanFormBinding
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
+import java.time.Instant
+import java.util.Date
 
 class PlanFormFragment : Fragment() {
 
@@ -39,33 +46,57 @@ class PlanFormFragment : Fragment() {
             viewModel.getPlanById(planId)
         }
 
-        val listForSpinner = mutableListOf<String>()
+        val listForSpinner = mutableListOf<Receiver>()
+        val listForSpinnerString = mutableListOf<String>()
         viewModel.receivers.observe(viewLifecycleOwner, Observer {receivers ->
             receivers.map {
-                listForSpinner.plusAssign(it.receiverName)
+                listForSpinner.plusAssign(it)
+                listForSpinnerString.plusAssign(it.receiverName)
             }
-            Log.i("asdsadasd", listForSpinner.size.toString())
             val arrayAdapter = ArrayAdapter(this.requireContext(),
-                android.R.layout.simple_spinner_item, listForSpinner)
+                android.R.layout.simple_spinner_item, listForSpinnerString)
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.receiveSpinner.setAdapter(arrayAdapter)
         })
 
+        val listForChipGroup = mutableListOf<Gift>()
+        val listForChipGroupChips = mutableListOf<Chip>()
+        viewModel.gifts.observe(viewLifecycleOwner, Observer { gifts ->
+            gifts.map {
+                val chip = Chip(context)
+                chip.id = it.gId.toInt()
+                chip.text = it.giftName
+                chip.isClickable = true
+                chip.isCheckable = true
+
+                listForChipGroupChips.plusAssign(chip)
+                listForChipGroup.plusAssign(it)
+            }
+            listForChipGroupChips.map {
+                binding.giftsChips.addView(it)
+            }
+        })
+
+        var holiday: String = ""
+        var date: Date = Date.from(Instant.now())
+        var receiver: Receiver
+        val gifts = mutableListOf<Gift>()
 
         binding.addButton.setOnClickListener {
-            binding.receiveSpinner.selectedItem
-            /*name = binding.nameField.editText?.text.toString()
-            description = binding.descriptionField.editText?.text.toString()
-            if (binding.shoesSizeField.editText?.text.toString() != "") shoesSize = Integer.parseInt(binding.shoesSizeField.editText?.text.toString())
-            val newClothes: Clothes = Clothes(
-                name = name,
-                season = season,
-                type = type,
-                description = description,
-                clothesSize = clothesSize,
-                shoesSize = shoesSize
+            receiver = listForSpinner.first { it.receiverName.equals(binding.receiveSpinner.selectedItem.toString()) }
+            listForChipGroup.filter { binding.giftsChips.checkedChipIds.contains(it.gId.toInt())}.map {
+                gifts.plusAssign(it)
+            }
+            holiday = binding.holidayField.editText?.text.toString()
+
+            val plan = Plan(
+                holiday = "asdasd",
+                date = date.time
             )
-            viewModel.insertNewClothes(newClothes)*/
+
+
+            Log.i("asdsafsfa", plan.toString()+receiver.toString()+gifts.toString())
+            viewModel.insertNewPlan(plan, receiver, gifts)
             this.findNavController().navigate(R.id.action_clothesFormFragment_to_sleepTrackerFragment)
         }
 

@@ -1,6 +1,7 @@
 package com.example.android.trackmysleepquality.planform
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.android.trackmysleepquality.database.AppDatabaseDao
@@ -36,6 +37,7 @@ class PlanFormViewModel(
     }
 
     var receivers = dao.getAllReceivers()
+    var gifts = dao.getAllGifts()
 
     /*var currentClothesItem = MutableLiveData<Clothes?>()
     fun getClothesById(id: Long){
@@ -89,17 +91,16 @@ class PlanFormViewModel(
 
     fun insertNewPlan(plan: Plan, receiver: Receiver, gifts: List<Gift>){
         uiScope.launch {
-            insertPlanWithGift(insertPlan(plan, receiver), gifts)
+            val planId  = insertPlan(plan, receiver)
+            insertPlanWithGift(planId, gifts)
         }
     }
     private suspend fun insertPlan(plan: Plan, receiver: Receiver): Long {
         return withContext(Dispatchers.IO) {
             val newPlanId = dao.insertPlan(plan)
-            val newReceiverId = dao.insertReceiver(receiver)
-
             val pr = PlanReceiver(
                 newPlanId,
-                newReceiverId,
+                receiver.rId,
             )
             dao.insertPlanReceiver(pr)
             newPlanId
@@ -109,10 +110,10 @@ class PlanFormViewModel(
     private suspend fun insertPlanWithGift(planId: Long, gifts: List<Gift>){
         withContext(Dispatchers.IO) {
             gifts.map {
-                val newGiftId = dao.insertGift(it)
+                //val newGiftId = dao.insertGift(it)
                 val pg = PlanGifts(
                     planId,
-                    newGiftId,
+                    it.gId,
                 )
                 dao.insertPlanGift(pg)
             }

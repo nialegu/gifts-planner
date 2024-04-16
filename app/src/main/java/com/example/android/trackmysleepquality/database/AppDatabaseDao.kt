@@ -72,6 +72,11 @@ interface AppDatabaseDao {
     fun updatePlanReceiver(pr: PlanReceiver)
     @Update
     fun updatePlanGifts(pr: PlanGifts)
+    @Query("select * from planreceiver where receiverId == :id")
+    fun getPlanReceiveByRecieveId(id: Long): List<PlanReceiver>
+
+    @Query("delete from `plan` where pId == :id")
+    fun deletePlanById(id: Long)
 
     /*@Query("delete from planreceiver where planId == :id")
     fun deleteRelationsPlanReceiver(id: Long)

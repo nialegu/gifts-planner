@@ -40,6 +40,10 @@ class ReceiverListViewModel(
     }
     private suspend fun delete(receiver: Receiver){
         withContext(Dispatchers.IO){
+            val list = dao.getPlanReceiveByRecieveId(receiver.rId)
+            list.map {
+                dao.deletePlanById(it.planId)
+            }
             dao.deleteReceiver(receiver)
         }
     }

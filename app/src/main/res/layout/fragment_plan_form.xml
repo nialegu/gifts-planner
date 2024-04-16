@@ -82,9 +82,17 @@
                     android:id="@+id/receive_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="48dp"
                     tools:ignore="MissingConstraints"
                     >
                 </Spinner>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/gifts_chips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.google.android.material.chip.ChipGroup>
 
 
             </LinearLayout>
